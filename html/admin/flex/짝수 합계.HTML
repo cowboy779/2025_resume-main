@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        while (1) {
+            var a = parseInt(prompt("1~100까지 정수를 입력하세요"));
+
+            if (a > 100 || a < 1) {
+                alert("1~100까지 정수를 입력하세요");
+            } else {
+                if (isNaN(a)) {
+                    alert("숫자를 입력하세요.")
+                }
+            }
+            var b = parseInt(prompt("1~100까지 정수를 입력하세요"));
+
+            if (b > 100 || b < 1) {
+                alert("1~100까지 정수를 입력하세요");
+            } else {
+                if (isNaN(b)) {
+                    alert("숫자를 입력하세요.")
+                }
+            }
+            var c = parseInt(prompt("1~100까지 정수를 입력하세요"));
+
+            if (c > 100 || c < 1) {
+                alert("1~100까지 정수를 입력하세요");
+            } else {
+                if (isNaN(c)) {
+                    alert("숫자를 입력하세요.")
+                } else break;
+            }
+        }
+        var arr = [a, b, c]
+        var sum = 0;
+        for (var i of arr) {
+            if (i % 2 === 0)
+                sum += i;
+        }
+        document.write("입력한 숫자 : " + arr + " <br>");
+        document.write("합계 : " + sum + " <br>");
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypeScript Playground - Main</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: linear-gradient(120deg, #f8fafc 0%, #e0e7ff 100%);
+      min-height: 100vh;
+    }
+    header {
+      background: #4f46e5;
+      color: #fff;
+      padding: 2rem 0 1rem 0;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      letter-spacing: 2px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      padding: 2rem;
+      animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .btn {
+      background: #6366f1;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background 0.2s;
+    }
+    .btn:hover {
+      background: #4338ca;
+    }
+    ul {
+      padding-left: 1.2rem;
+    }
+    .result {
+      margin-top: 1.5rem;
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 1rem;
+      min-height: 2rem;
+      font-size: 1.1rem;
+      color: #334155;
+      word-break: break-all;
+    }
+    .fade {
+      animation: fadeIn 0.7s;
+    }
+    .input-group {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+    input[type="text"] {
+      flex: 1;
+      padding: 0.6rem;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>TypeScript Playground</h1>
+    <p style="font-size:1.1rem; margin-top:0.5rem;">타입스크립트 샘플인데 & 대나무숲 메인화면</p>
+  </header>
+
+  <div class="container">
+    <h2>기본 해우소</h2>
+    <ul>
+      <!-- <li>타입 지정 변수/배열/객체/튜플</li> -->
+      <li>말하고 싶은거 익명으로 쉿</li>
+      <li>떠벌리지 않기</li>
+      <li>모르는거는 누구도 모르게</li>
+      <li>배후는 항상 뒤에있따</li>
+    </ul>
+    <div class="input-group">
+      <input type="text" id="nameInput" placeholder="자 한 번 드가보자!! 질러!!" />
+      <button class="btn" id="greetBtn">소리지르기</button>
+    </div>
+    
+    <div class="result" id="resultBox"></div>
+    <button class="btn" id="showInfoBtn">누군지 정보 보기</button>
+    
+    <div class="result" id="infoBox" style="display:none;"></div>
+  </div>
+
+  <!-- jQuery CDN 추가 -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- 타입스크립트에서 컴파일된 JS -->
+  <script src="../build/ex1.js"></script>
+  <script>
+    // jQuery 형식으로 TypeScript 함수/변수 활용
+    $(function() {
+
+      $('#greetBtn').on('click', function() {
+        const name = $('#nameInput').val() || '방문자';
+        
+        // greet 함수는 ex1.js에서 제공
+        const msg = typeof greet === 'function' ? greet(name) : `익명의 1인 : ${name}!`;
+        const $box = $('#resultBox');
+        $box.text(msg).removeClass('fade');
+        
+        void $box[0].offsetWidth;
+        $box.addClass('fade');
+      });
+
+      $('#showInfoBtn').on('click', function() {
+        const info = [
+          `나이: ${typeof myAge !== 'undefined' ? myAge : 'N/A'}`,
+          `친구: ${typeof myFriends !== 'undefined' ? myFriends.join(', ') : 'N/A'}`,
+          `좌표: ${typeof myLocation !== 'undefined' ? myLocation : 'N/A'}`,
+          `유저: ${typeof user !== 'undefined' ? user.name + ' (' + user.age + ')' : 'N/A'}`
+        ].join('\n');
+
+        const $box = $('#infoBox');
+        $box.text(info).show().removeClass('fade');
+
+        void $box[0].offsetWidth;
+        $box.addClass('fade');
+
+        window.animateElement('infoBox', 'fade'); // id와 클래스명 전달
+      });
+      // 초기 애니메이션 효과
+      $('.container').addClass('fade');
+    });
+  </script>
+</body>
+</html>

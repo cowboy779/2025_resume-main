@@ -1,0 +1,6 @@
+오늘와 과제
+1.ssh
+2.shell
+3.권한
+4.bash
+5.firewall

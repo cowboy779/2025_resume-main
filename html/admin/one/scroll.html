@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>one scroll page</title>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <style>
+        *{ margin:0;padding:0}
+        /* 세로스크롤 히든 */
+        html, body{overflow-y:hidden;}
+        ul, ol{list-style:none}
+        .header{position:fixed;z-index:10;top:0;width:100%}
+        .header ul:after{content:"";display:block;clear:both}
+        .header ul li{float: left; border-left:1px solid rgba(255, 255, 255, 0);box-sizing:border-box; width: 33.3%;}
+        .header ul li:first-child{border-left:none}
+        .header ul li a{display:block;height:60px;text-align:center;line-height:60px;font-size:20px;text-decoration:none;background-color:#000;color:#fff}
+        .header ul li.on a{background-color:#fff;color:#000}
+        .content div{position:relative}
+        .content div p{position:absolute;top:50%;margin-top:-40px;text-align:center;width:100%;font-size:80px;font-weight:bold;color:#fff}
+        .content .cnt01{background-color:skyblue;}
+        .content .cnt02{background-color:orange;}
+        .content .cnt03{background-color:plum;}
+
+        .anchor{  
+            display:block;
+            position:fixed;
+            bottom: 164px; 
+            right: 35px;
+            cursor: pointer;
+            z-index: 99;
+            font-weight:bold;
+            color:#fff;
+            font-size:16px;
+            background-color: black;
+        }
+        #scrollTopPc {
+            display: block;
+            position: fixed;
+            bottom: 104px; 
+            right: 35px;
+            cursor: pointer;
+            z-index: 99;
+        }
+        #scrollDownPc {
+            display: block;
+            position: fixed;
+            bottom: 60px; 
+            right: 35px;
+            cursor: pointer;
+            z-index: 99;
+        }
+        #scrollHome {
+            display: block;
+            position: fixed;
+            bottom: 16px; 
+            right: 35px;
+            cursor: pointer;
+            z-index: 99;
+        }
+    </style>
+    <script>
+        var scroll = function(){
+            var $nav = null,
+                $cnt = null,
+                $fot = null,
+
+                moveCnt = null,
+                moveIndex = 0,
+                moveCntTop = 0,  
+                winH = 0,
+                
+                time = false; // 새로 만든 변수
+                
+            $(document).ready(function(){
+                init();
+                initEvent();
+            });
+
+            var init = function(){
+                $nav = $(".header a");
+                $cnt = $(".content");
+                $fot = $("#footer li");
+            };
+
+            //초기 div 사이즈 세팅
+            var winResize = function(){
+                winH = $(window).height();
+                $cnt.children("div").height(winH);
+
+                console.log("moveIndex.scrollTop :"+moveIndex.scrollTop);
+            };
+           
+            var initEvent = function(){
+                $("html ,body").scrollTop(0);
+                
+                 winResize();
+                //$(window).resize(function(){winResize();});
+
+                //a태그 앵커로 이벤트 핸들링
+                $(".anchor").click(function(e){
+                    e.preventDefault(); //이벤트 중지
+
+                    moveIndex = $(this.hash).index();
+                    moving(moveIndex);
+                });
+                $fot.on("click", function(){
+                    console.log($("#footer ul").children().eq(0).index());
+                    console.log($("#footer ul").children().eq(-1).index());
+                    let selectIndex = $(this).index();
+                    
+                    switch (selectIndex) {
+                        case 0:
+                            if(moveIndex != 0){
+                                moveIndex -= 1;
+                            }
+                            break;
+                        case 1:
+                            if(moveIndex != 2){
+                                moveIndex += 1;
+                            }
+                            break;
+                        case 2:
+                            moveIndex = 0;
+                            break;
+                        default:
+                            break;
+                    }
+                    
+                    moving(moveIndex);
+                    return false;
+                });
+                $nav.on("click", function(){
+                    moveIndex = $(this).parent("li").index();
+                    moving(moveIndex);
+                    return false;
+                });
+                $cnt.on("mousewheel", function(e){
+                    if(time === false){ 
+                        wheel(e);
+                    }
+                });
+            };
+            
+            
+
+            
+            var wheel = function(e){
+                if(e.originalEvent.wheelDelta < 0){
+                    
+                    if(moveIndex < 2){
+                        moveIndex = moveIndex +1;
+                        moving(moveIndex);
+                    };
+                }else{
+                    if(moveIndex > 0){
+                        moveIndex = moveIndex -1;
+                        moving(moveIndex);
+                    };
+                };
+            };
+            
+            var moving = function(index){
+                time = true
+                moveCnt = $cnt.children("div").eq(index);
+                moveCntTop = moveCnt.offset().top;
+                
+                $("html ,body").stop().animate({
+                    scrollTop: moveCntTop
+                }, 500, function(){
+                    time = false; // 휠 이벤트가 끝나면 false로 변경
+                });
+                $nav.parent("li").eq(index).addClass("on").siblings().removeClass("on");
+            };
+        };
+
+    scroll();
+
+    </script>
+  </head>
+<body>
+    <div class="header">
+        <ul>
+            <li class="on" class="a"><a href="">BTN01</a></li>
+            <li><a href="">BTN02</a></li>
+            <li><a href="">BTN03</a></li>
+        </ul>
+    </div>
+    <div id ="footer">
+        <ul>
+            <li id="scrollTopPc"><img src="btn_up_dark.png" width="44" height="39"></li>
+            <li id="scrollDownPc"><img src="btn_down_dark.png" width="44" height="39"></li>
+            <li id="scrollHome"><img src="btn_home.png" width="44" height="39"></li>
+        </ul>
+        <!-- <div id="scrollTopPc" onclick=""><img src="btn_up_dark.png" width="44" height="39"></div>  -->
+        <!-- <div id="scrollDownPc" onclick=""><img src="btn_down_dark.png" width="44" height="39"></div>  -->
+    </div>
+    <a href="#target" class="anchor">'Scroll03' 앵커</a>
+    <div class="content">
+        <div class="cnt01"><p>Scroll01</p></div>
+        <div class="cnt02"><p>Scroll02</p></div>
+        <div class="cnt03" id="target"><p>Scroll03</p></div>
+    </div>
+    <!-- <div class="footer">
+        <ul>
+            <li><a href="">UP</a></li>
+            <li><a href="">DOWN</a></li>
+            <li><a href="">TOP</a></li>
+        </ul>
+    </div> -->
+</body>
+</html>

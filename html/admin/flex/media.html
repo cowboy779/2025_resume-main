@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<!-- - 메타데이터(Meta Data) 속성
+		 - 모바일 페이지나 반응형 작업 시 사용
+		 메타 뷰포트를 선언을 하여야 미디어쿼리을 실행 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>CSS media</title>
+	<link rel="stylesheet" href="default.css">
+	<style>
+		/* 화면사이즈가 1024px 보다 크면 해당요소를 감춘다 */
+		@media (max-width: 1024px) {
+  			div {
+    			display: none;
+  			}
+		}
+
+		/* #media-320, #media-768, #media-1024, #media-1025 {
+			display: none;
+			height: 0px;
+			overflow: hidden;
+		} */
+  
+		@media all and (max-width: 320px) {
+			#media-320 { 
+				display: block; 
+				background-color: aqua;
+			}
+		}
+		@media all and (min-width: 321px) and (max-width: 768px) {
+			#media-768 { 
+				display: block; 
+				background-color: yellowgreen;
+			}
+		}
+		@media all and (min-width: 769px) and (max-width: 1024px) {
+			#media-1024 { 
+				display: block; 
+				background-color: aquamarine;
+			}
+		}
+		@media all and (min-width: 1025px) {
+			#media-1025 { 
+				display: block; 
+				background-color: coral;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div id="media-320">해상도 최대 media-320</div>
+	<div id="media-768">해상도 최대 media-768</div>
+	<div id="media-1024">해상도 최대 media-1024</div>
+	<div id="media-1025">해상도 최대 media-1025 이상 </div>
+
+</body>
+</html>

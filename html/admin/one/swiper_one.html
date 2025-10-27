@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEMADEMAX Sign Board</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <style>
+        @media (max-width: 768px) {
+            .swiper-slide img.bg-img {
+                width: 100%;
+                height: auto;
+            }
+            .swiper {
+                height: auto;
+            }
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { overflow: auto; }
+        .swiper { width: 100vw; height: 100vh; }
+        .swiper-slide {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* 배경 이미지 스타일 */
+        .swiper-slide img.bg-img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 이미지 비율 유지하면서 꽉 채우기 */
+            transform: translate(-50%, -50%);
+        }
+
+        /* 오버레이 이미지 스타일 */
+        .overlay-img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30%;
+            height: auto;
+            z-index: 2;
+        }
+
+        /* 특정 슬라이드에 대한 스타일 조정 (옵션) */
+        .swiper-slide.slide1 .overlay-img, 
+        .swiper-slide.slide4 .overlay-img{
+            width: 25%;
+            background-color: white;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .swiper-slide.slide6 .overlay-img {
+            top:35%;
+            left:83%;
+        }
+
+        /* 슬라이드별 배경색 */
+        .slide1 { background: skyblue; }
+        .slide2 { background: orange; }
+        .slide3 { background: plum; }
+        .slide4 { background: lightgreen; }
+        .slide5 { background: lightcoral; }
+        .slide6 { background: lightseagreen; }
+    </style>
+</head>
+<body>
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide slide1">
+                <img class="bg-img" src="https://www.wemademax.com:4430/gameimg/pSM_img_main_back.jpg" alt="Scroll01"/>
+                <img class="overlay-img" src="https://www.wemademax.com:4430/gameimg/pSM_gtit.png" alt="싱글맞고">
+            </div>
+            <div class="swiper-slide slide2">
+                <img class="bg-img" src="https://www.wemademax.com:4430/gameimg/pDB_img_main_back.jpg" alt="Scroll02"/>
+                <img class="overlay-img" src="https://www.wemademax.com:4430/gameimg/pDB_gtit.png" alt="드래곤꺼어억">
+            </div>
+            <div class="swiper-slide slide3">
+                <img class="bg-img" src="https://www.wemademax.com:4430/gameimg/Silk_img_main_back.jpg" alt="Scroll03"/>
+                <img class="overlay-img" src="https://www.wemademax.com:4430/gameimg/Silk_gtit.png" alt="실크로드">
+            </div>
+            <div class="swiper-slide slide4">
+                <img class="bg-img" src="https://www.wemademax.com:4430/gameimg/p010_img_main_back.jpg" alt="Scroll04"/>
+                <img class="overlay-img" src="https://www.wemademax.com:4430/gameimg/p010_gtit.png" alt="플레이포커">
+            </div>
+            <div class="swiper-slide slide5">
+                <img class="bg-img" src="https://www.wemademax.com:4430/gameimg/p103_img_gamelist.png" alt="Scroll05"/>
+                <img class="overlay-img" src="https://www.wemademax.com:4430/gameimg/p103_gtit.png" alt="윈드러너RE">
+            </div>
+            <div class="swiper-slide slide6">
+                <img class="bg-img" src="https://www.wemademax.com:4430/gameimg/p011_img_gamelist.png" alt="Scroll06"/>
+                <img class="overlay-img" src="https://www.wemademax.com:4430/gameimg/p011_gtit.png" alt="맞고의신">
+            </div>
+            <div class="swiper-slide slide7">
+                <img class="bg-img" src="https://www.wemademax.com:4430/gameimg/p001_img_gamelist.png" alt="Scroll07"/>
+                <img class="overlay-img" src="https://www.wemademax.com:4430/gameimg/p001_gtit.png" alt="캔디팡쥬시월드">
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+
+        <div class="swiper-button-prev">
+            <div class="material-icons">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+            </div>
+        </div>
+        <div class="swiper-button-next">
+            <div class="material-icons"> 
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M8.59 7.41L10 6l6 6-6 6-1.41-1.41L13.17 12z"/></svg>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper('.swiper', {
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false // 사용자 조작 후에도 자동 재생 유지
+            },
+            loop: true,
+            direction: 'horizontal',
+            slidesPerView: 1,
+            centeredSlides: false, // 현재 활성화된 슬라이드를 가운데 정렬
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true
+            },
+            navigation: {
+                prevEl: '.swiper-button-prev',
+                nextEl: '.swiper-button-next'
+            },
+            effect: 'slide',
+            fadeEffect: {
+                crossFade: true, // 슬라이드 전환 시 크로스페이드 효과 활성화
+            },
+            speed: 1500, // 전환 속도를 1초로 설정
+        });
+    </script>
+</body>
+</html>

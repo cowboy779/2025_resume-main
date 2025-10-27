@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>one ex2</title>
+    <style type="text/css">
+        html,body{ margin:0; padding:0; width:100%; height:100%;}
+        /* .boxwrap{ display: table; width: 700%; height: 100%; table-layout: fixed;} */
+        /* .box{ display: table-cell; position:relative; color:#ffffff; font-size:24pt;} */
+        div{ width:100%; height:100%; position:relative; color:#ffffff; font-size:24pt;}
+        ul{position:fixed; z-index:10; top:0; width:100%;}
+        ul li.a{background-color:#fff;color:#000}
+        
+    </style>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+
+            var elm = ".box";
+
+            $(elm).each(function (index) {
+                $(this).on("mousewheel", function (e) {
+                    e.preventDefault();
+                    var delta = 0;
+                    
+                    if (!event){
+                        event = window.event; 
+                    } 
+                    
+                    if (event.wheelDelta) {
+                        delta = event.wheelDelta / 120;
+                    } else if (event.detail){
+                        delta = -event.detail / 3;
+                    }
+                    
+                    var moveTop = $(window).scrollTop();
+                    var elmSelecter = $(elm).eq(index);
+                    
+                    if (delta < 0) {
+                        try {
+                            moveTop = $(elmSelecter).next().offset().top;
+                        } catch (error) {}
+                    } else {
+                        try {
+                            moveTop = $(elmSelecter).prev().offset().top;
+                        } catch (error) {}
+                    }
+
+                    //화면이동 
+                    $("html,body").stop().animate({
+                        scrollTop: moveTop + 'px'
+                    }, {
+                        duration: 250, 
+                        complete: function () {}
+                    });
+
+
+
+                    var app = (function(abc) {
+                        console.log('함수 호출2'); // "함수 호출" 출력
+                        console.log('----------'); 
+                        
+                        var ab = [];
+                        ab.push('함수 호출3');
+                        ab.push(abc);
+                        return ab;
+                    }('함수 호출4'));
+                    
+                    //array 로 담아서 객체 호출
+                    console.log(app);
+
+
+                    !function(window, document, undefined) {
+                        // console.log(window, document);
+                        // console.log("어떤 기능");
+                    }(window, document);
+                    
+                    // 즉시실행함수
+                    // (function() {
+                    //     console.log('함수 호출2'); // "함수 호출" 출력
+                    // }());
+
+                });
+            });
+
+        }
+    </script>
+</head>
+<body>
+    <ul>
+        <li class="a"><a href="">red01</a></li>
+        <li><a href="">orange02</a></li>
+        <li><a href="">yellow03</a></li>
+    </ul>
+    <!-- <div class="boxwrap"> -->
+        <div class="box" style="background-color:red;">1</div>
+        <div class="box" style="background-color:orange;">2</div>
+        <div class="box" style="background-color:yellow;">3</div>
+    <!-- </div> -->
+</body>
+</html>

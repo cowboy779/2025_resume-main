@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<!-- - 메타데이터(Meta Data) 속성
+		 - 모바일 페이지나 반응형 작업 시 사용
+		 메타 뷰포트를 선언을 하여야 미디어쿼리을 실행 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>CSS Flex</title>
+	<link rel="stylesheet" href="default.css">
+	<style>
+		@media (max-width: 480px){
+			.flex-container{
+				display: flex;
+				/* flex-direction: row; */
+				/* flex-direction: row-reverse; */
+				/* flex-direction: column; */
+				/* flex-direction: column-reverse; */
+				/* flex-wrap: wrap-reverse; */
+				/* flex-wrap: wrap; */
+				
+				/* flex-direction: row / flex-wrap: wrap 합쳐놓은거 */
+				flex-flow: row wrap;
+				/* justify-content: center; */
+				/* align-items: center;	 */
+				height: 300px;
+				
+				/* margin: 0 0 auto; */
+			}
+			
+			/* .flex-item:nth-child(1){
+				flex : 1 1 0; 
+			}
+			.flex-item:nth-child(2){
+				flex : 3;
+			}
+			.flex-item:nth-child(3){
+				flex : 1 1 0;
+			} */
+			
+			
+			
+			.flex-item{
+				/* white-space: nowrap; */
+			}
+			
+		}
+	</style>
+</head>
+<body>
+	<div class="flex-container">
+		<div class="flex-item">AAAAAAAAAAAAAAAB</div>
+		<div class="flex-item">abc</div>
+		<div class="flex-item">helloflex</div>
+	</div>
+
+	
+	<!-- user-list message-list -->
+</body>
+</html>

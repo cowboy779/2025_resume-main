@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>opengraph 01</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- <meta property="og:url"         content="http://172.20.100.29/sns/opengraph.html" />
+<meta property="og:title"       content="test share title" />
+<meta property="og:description" content="test description fb" />
+<meta property="og:image"       content="http://172.20.100.29/sns/Logo-Test.png" /> -->
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://172.20.100.29/sns/opengraph.html">
+<meta property="og:title" content="페뷱 테스트">
+<meta property="og:description" content="오정훈의 메타태그">
+<meta property="og:image" content="http://172.20.100.29/sns/Logo-Test.png /">
+<!-- <meta property="og:image" content="http://172.20.100.29/sns/Logo-Test.png /"> -->
+<!-- <meta property="og:image:secure_url" content="http://172.20.100.29/sns/Logo-Test.png" /> -->
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<!-- Open Graph / twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="http://172.20.100.29/sns/opengraph.html">
+<meta property="twitter:title" content="이너태그 타이틀 테스트">
+<meta property="twitter:description" content="트위터 메타태그 테스트입니다.">
+<meta property="twitter:image" content="http://172.20.100.29/sns/Logo-Test.png/">
+<!-- <meta property="twitter:image" content="./sns/Logo-Test.png/"> -->
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+</head>
+<style>
+    .tab-menu>.select{
+        background-color: dodgerblue;
+        height: 82px;
+        font-size: 22px;
+    }
+    .tab-menu>.menu2{
+        background-color: aqua;
+        height: 82px;
+        font-size: 22px;
+    }
+</style>
+<script>
+    //전역 url
+    const uurl = "https://local-ogp.firebaseapp.com/site/hNGk3cJvs387P5iwCh0G";
+
+    //페이스북 공유하기
+    var shareToFace = function(url, image, title, summary){
+        // 가상으로 생성한 도메인 https://local-ogp.firebaseapp.com/site/xFuSHGEwU34JJcmBpMiK
+        url = uurl;
+        image = "";
+        title = "";
+        summary = "";
+	    
+         //passerby=1은 타인이 담벼락의 링크타고 들어올 때의 flag를 주는 것
+        var params = 'u='+encodeURIComponent(url+'?imgname='+image+'&msg='+summary+'&t='+title+"&passerby=1");
+
+	    window.open('https://www.facebook.com/sharer/sharer.php?'+params, 'sharer', 'width=626,height=500');
+    };
+
+    //트위터 공유하기
+    var shareToTwitter = function(url, image, title, summary){
+        image = "";
+        summary = "";
+	    
+        title = encodeURIComponent('트위터 오정훈의 테스트 타이틀');
+        var url = encodeURIComponent(uurl);
+        
+        window.open('http://twitter.com/intent/tweet?text=' + title + '&url=' + url, "_snsPopupWindow", "width=500, height=500");
+    };
+    
+    
+</script>   
+<body>
+    <img src="/sns/Logo-Test.png">
+    <ul class = "tab-menu" id="tabMenul">
+        <li class="menu1 select">
+            <img src="/sns/popup_fb.png" />
+            Facebook 
+            <button onclick="shareToFace()">공유하기</button>
+        </li>
+        <li class="menu2">
+            <img src="/sns/popup_twitter.png" />
+            Twitter 
+            <button onclick="shareToTwitter()">공유하기</button>
+        </li>
+    </ul>
+    <br/><br/>
+    <hr/>
+    <iframe width="720" height="405" src="https://www.youtube.com/embed/Z8So44m4w7k?autoplay=1&mute=1&amp;playlist=Z8So44m4w7k&loop=1" 
+        title="YouTube video player" frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+    <hr/>
+    <br/><br/>
+  <a href="/main.php"><button>메인으로</button></a>
+</body>
+</html>
+
