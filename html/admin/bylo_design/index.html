@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BYLO Chip_v0807</title>
+    <link type="text/css" rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="./css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="./css/common.css" />
+  </head>
+  <body>
+
+    <figure class="text-top-title">
+          <b>Exchange</b>
+    </figure>
+    
+    <div class="card mb-3">
+        <div class="card-body">
+          
+          <table>
+            <tr>
+              <td>
+                <div class="form-group">
+                  <div class="col-sm-11">
+                    <input type="text" readonly="" class="form-control-plaintext" id="" value="0x7e3a...38ce4156821" style="font-size: 14px;">
+                  </div>
+                  <div class="col-sm-custom">
+                    <img src="./png/icon_refresh.png" id="icon_refresh">
+                  </div>
+                </div>
+              </td>
+              
+              <td rowspan="2">
+
+              <div class="form-group2">
+                <div class="alert-tot-custom">
+                  <div class="alert-heading"><b>KYC/AML verification required</b></div>
+                  <!-- <div class="alert-heading vertical mb-custom"><b>verification required</b></div> -->
+                </div>
+                <div class="alert-tot-custom2" style="display: none;">
+                  <div class="alert-heading"><b>KYC/AML verification completed</b></div>
+                  <!-- <div class="alert-heading vertical mb-custom"><b>verification completed</b></div> -->
+                </div>
+              </div>
+
+              </td>
+            </tr>
+            
+            <tr>
+              <td>
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <!-- <span class="input-group-text" style="background: url(./png/img_top_bylo.png); background-repeat: no-repeat ; background-size: 35px 35px;"> </span> -->
+                  <input type="text" class="form-control-custom input-custom" id="" value="258.5B" readonly="true">
+                </div>
+                
+                <div style="margin-left: 10px;"></div>
+    
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control-custom2 input-custom" id="" value="242T" readonly="true">
+                </div>
+
+                <div style="margin-left: 10px;"></div>
+
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control-custom3 input-custom" id="" value="242T" readonly="true">
+                </div>
+              </div>
+              </td>
+            </tr>
+          </table>
+
+        </div>
+    </div>
+
+    <div class="card card2custom mb-3">
+        <div class="card-header">
+          <div style="display: inline; color: #ffffff; font-size: 21px;"><b>Exchange</b>&nbsp;</div>
+          <div class="ex-rate-bc-text" style="transform: translateY(8px); float: right; color: #7e84a3; font-size: 15px;">
+            The Exchange rate is 1BYLO : 100,000 Chips
+          </div>
+          <div class="ex-rate-cb-text" style="display : none; transform: translateY(8px); float: right; color: #7e84a3; font-size: 15px;">
+            The Exchange rate is 120,000 Chips : 1BYLO
+          </div>
+        </div>
+        <div class="card-body">
+
+          <div class="form-group-linebox">
+            <div class="table-custom">
+              <div class="row-custom">
+                <div class="cell-custom" id="cell_left_from" colspan="3">From</div>
+              </div>
+              <div class="row-custom">
+                <div class="cell-custom" id="cell_left_img"></div>
+                <div class="cell-custom" id="cell_left_text">BYLO</div>
+                <div class="cell-custom">
+                  <input id="cell_left_coin" type="text" value="1500">
+                </div>
+              </div>
+            </div>
+              
+            <div class="cell-custom" id="cell_exchange"></div>
+            
+            <div class="table-custom_right">
+              <div class="row-custom">
+                <div class="cell-custom" id="cell_right_to" colspan="3">to</div>
+              </div>
+              <div class="row-custom">
+                <div class="cell-custom" id="cell_right_img"></div>
+                <div class="cell-custom" id="cell_right_text">CHIP</div>
+                <div class="cell-custom">
+                  <input id="cell_right_coin" type="text" value="0">
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <figure class="text-center">
+            <span class="text-secondary">
+              <!-- <div class="rate-bylo-text">The exchange rate is 1 BYLO : 1,000 CHIP.</div> -->
+              <!-- <div class="rate-chip-text" style="display: none;">The exchange rate is 1500 CHIPS : 1 BYLO.</div> -->
+              <div class="alert-container">
+                  <small>
+                    <span style="color: #e00b0b; ">KYC/AML verification is required.</span>
+                    <span class="rate-chip-text" style="color: #e00b0b; display: none;">The minimum withdrawal amount is 1,500 Chip</span>
+                  </small>
+              </div>
+            </span>
+              <button type="button" class="btn-blue"><b>Exchange</b></button>
+          </figure>
+
+        </div>
+    </div>
+
+    <figure class="text-center">
+
+        <div class="text-footer">
+          <small>
+            <b>·</b> The maximum withdrawal amount per day without KRC/AML verification is 2,000 BYLO.
+            <br>
+            <b>·</b> KYC/AML verification is available through the KYC verification button at the top.
+            <br>
+            <b>·</b> With KYC/AML verification, the maximum withdrawal amount per day is 10,000 BYLO.
+            <br>
+            <b>·</b> The withdrawal amount reset time is 00:00 GMT.
+          </small>
+        </div>
+      
+    </figure>
+
+
+    <script src="./js/bootstrap.bundle.min.js" ></script>
+    <script src="./js/bootstrap.bundle.js" ></script>
+    <script src="./js/jquery-3.7.0.min.js" ></script>
+    <script src="./js/bylo_exchange.js" ></script>
+    
+    <script>
+    </script>
+
+  </body>
+</html>
