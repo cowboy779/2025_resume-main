@@ -1,4 +1,5 @@
 <?php
+include_once __DIR__ . '/../config.php';
 
 class Helper
 {
@@ -209,14 +210,15 @@ class Helper
     
     static function getWemadeMaxAccountName($email) {
         //$login = false;
-
         $name = null;
+
         // LDAP Auth
-        $ldapserver = 'ldaps://ldap.lightcon.net';
-        $ldaptree = "cn=users,dc=wemade,dc=com";
+        $ldapserver = Config::$LDAP_SERVER;
+        $ldaptree = Config::$LDAP_TREE;
         $ldapconn = ldap_connect($ldapserver);
         ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
         $user_search = ldap_search($ldapconn, $ldaptree, "(mail=$email)");
+
         if ($user_search) {
             $user_entry = ldap_first_entry($ldapconn, $user_search);
             //$userId = GetStrVal(0, ldap_get_values($ldapconn, $user_entry, "uid"));
@@ -224,7 +226,9 @@ class Helper
             //$user_dn = ldap_get_dn($ldapconn, $user_entry);
             //$login = ldap_bind($ldapconn, $user_dn, $passwd);
         }
+
         ldap_close($ldapconn);
+        
         return $name;
         //if ($login && DB_GetUserDataByEmail($email) == null) { // UserDB에 새로운 사용자로 등록
         //    DB_InsertNewUser($userId, '', $email, $name);
@@ -236,17 +240,19 @@ class Helper
     static function getWemadeMaxAccountDatas()
     {
         // LDAP 계정 리스트 가져오기
-        $ldapserver = 'ldaps://ldap.lightcon.net';
-        $ldaptree = "cn=users,dc=wemade,dc=com";
+        $ldapserver = Config::$LDAP_SERVER;
+        $ldaptree = Config::$LDAP_TREE;
 
         $ldap_accounts = [];
         $ldapconn = ldap_connect($ldapserver);
         ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
         $ldapdata = null;
         $ldapbind = @ldap_bind($ldapconn);
+
         if ($ldapbind) {
             //$result = ldap_search($ldapconn, $ldaptree, "(memberOf=cn=joymax members,cn=groups,dc=joymax,dc=com)");
             $result = ldap_search($ldapconn, $ldaptree, "(objectClass=*)");
+            
             if ($result) {
                 $ldapdata = ldap_get_entries($ldapconn, $result);
             }
