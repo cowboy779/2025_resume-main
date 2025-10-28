@@ -4,7 +4,7 @@
 
 📍 경기 성남시 분당구
 📧 cowboy779@naver.com
-<!-- 🌐 [https://creco.today](https://creco.today)   -->
+<!-- 🌐 [](https://)   -->
 💻 [https://github.com/cowboy779/2025_resume-main](https://github.com/cowboy779/2025_resume-main)  
 📱 010-8809-3586  
 
