@@ -16,7 +16,7 @@
 
         <h3>중요 </h3>
         <?php
-             echo "<a href=\"config_notice/view_md.php\">[실행전 중요사항]</a>";
+             echo "<a href=\"1. Key points/view_md.php\">[실행전 중요사항]</a>";
              ?>
         <hr />
 

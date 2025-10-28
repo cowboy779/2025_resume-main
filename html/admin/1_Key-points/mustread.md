@@ -6,7 +6,7 @@ PHP 설정파일 (php.ini) 에서
 
 ```
 php.ini
-display_errors = On, 
+display_errors = On,
 log_errors = On
 ```
 
