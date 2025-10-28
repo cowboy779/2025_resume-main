@@ -1,5 +1,5 @@
 <?php
-  include_once 'config.php';
+  include_once './config.php';
   
   // Class를 new하면 호출되는 함수
   spl_autoload_register(function($class) {
