@@ -49,9 +49,9 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 
   그외 
 - CSR CRT CA 'SSL' 인증서 발급 및 갱신
-- package manager(앱 패키지파일 관리) 기반 유지보수 및 CDN 배치 구성
+- Package Manager(앱 패키지파일 관리) 기반 유지보수 및 CDN 배치 구성
 - Zabbix 모니터링 툴 관리
-- VM 트러블슈팅 장애대응(메모리,cpu,애플리케이션 systemd)
+- VM 트러블슈팅 장애대응 기술지원
 
 <!-- - 중요 백업파일 MySQL DB 실시간 이중화 작업 -->
 <!-- - AWS(보조) VPC(서브넷)피어링 - 라우팅테이블 - 인스턴스 등록 -->
