@@ -71,14 +71,14 @@
         <hr />
         <h4>파일 업로드 </h4>
         <?php
-             echo "<a href=\"fileupload/file_test.php\">[*파일업로드1]</a>";
+             echo "<a href=\"ldap_login/file_test.php\">[*파일업로드1]</a>";
         ?>
 
         <br></br>
         <hr />
         <h4>LDAP </h4>
         <?php
-             echo "<a href=\"fileupload/ldap_php_test.php\">[LDAP PHP 인증 예제]</a>";
+             echo "<a href=\"ldap_login/ldap_php_test.php\">[LDAP PHP 인증 예제]</a>";
         ?>
 
         <br></br>
