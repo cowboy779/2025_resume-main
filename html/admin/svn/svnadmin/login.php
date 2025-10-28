@@ -27,14 +27,12 @@ include("include/config.inc.php");
 // Authentication disabled.
 if (!$appEngine->isAuthenticationActive() )
 {
-	error_log(var_export('여기2',true));
 	$appEngine->forward(PAGE_HOME, null, true);
 }
 
 // If the user is already logged in, we should redirect him to the index page.
 if ($appEngine->checkUserAuthentication(false))
 {
-	error_log(var_export('여기3',true));
 	$appEngine->forward(PAGE_HOME, null, true);
 }
 
@@ -44,7 +42,6 @@ $appTR->loadModule("login");
 //
 if (check_request_var("login"))
 {
-	error_log(var_export('여기4',true));
 	$appEngine->handleAction("login_authentication");
 }
 
