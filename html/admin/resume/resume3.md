@@ -5,7 +5,7 @@
 📍 경기 성남시 분당구
 📧 cowboy779@naver.com
 <!-- 🌐 [](https://)   -->
-💻 [https://github.com/cowboy779/2025_resume-main](https://github.com/cowboy779/2025_resume-main)  
+💻 [https://github.com/cowboy779](https://github.com/cowboy779/2025_resume-main/tree/main/html/admin/)  
 📱 010-8809-3586  
 
 ---
