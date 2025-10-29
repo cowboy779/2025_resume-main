@@ -1,0 +1,84 @@
+/* custom-theme-v4.css */
+/* 사용법: marp --theme custom-theme-v4.css portfolio.md --pdf */
+
+@import 'default';
+
+/* -------------------
+ * 기본 슬라이드 설정 (흰색 배경)
+ * ------------------- */
+section {
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  font-size: 26px;
+  line-height: 1.6;
+  color: #222; /* 기본 텍스트 색상 */
+  padding: 60px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #ffffff; /* 모든 배경 흰색 */
+}
+
+/* -------------------
+ * 타이틀 슬라이드 (흰색 배경)
+ * ------------------- */
+section.title {
+  background-color: #ffffff; /* 흰색 배경 */
+  color: #222; /* 기본 텍스트 색상 */
+  text-align: left;
+  align-items: flex-start;
+  font-size: 38px;
+  letter-spacing: -0.5px;
+}
+/* section.title 내부의 h1, h2, h3, strong 등은 
+  아래 정의된 '일반 본문 요소'의 색상 규칙을 따릅니다.
+*/
+
+
+/* -------------------
+ * 섹션 구분 슬라이드 (흰색 배경)
+ * ------------------- */
+section.section {
+  background-color: #ffffff; /* 흰색 배경 */
+  color: #222; /* 기본 텍스트 색상 */
+  text-align: left;
+  align-items: flex-start;
+  padding: 100px 80px;
+  font-size: 36px;
+  font-weight: 700;
+}
+/* section.section 내부의 h1, h2, h3, strong 등은 
+  아래 정의된 '일반 본문 요소'의 색상 규칙을 따릅니다.
+*/
+
+
+/* -------------------
+ * 일반 본문 요소 (색상 분리)
+ * ------------------- */
+h1, h2, h3 {
+  font-weight: 600;
+}
+h1 { 
+  font-size: 36px; 
+  margin-bottom: 20px; 
+  color: #008a00; /* h1 (메인 녹색) */
+}
+h2 { 
+  font-size: 30px; 
+  margin-bottom: 12px; 
+  color: #0070f3; /* h2 (파란색) */
+}
+h3 { 
+  font-size: 26px; 
+  margin-bottom: 10px; 
+  color: #334155; /* h3 (어두운 슬레이트색) */
+}
+
+strong, b {
+  color: #4CAF50; /* 강조 (선명한 녹색) */
+  font-weight: 700;
+}
+
+ul {
+  list-style: disc;
+  margin-left: 1.5em;
+}

@@ -1,0 +1,173 @@
+/* custom-theme-v3.css */
+/* 사용법: marp --theme custom-theme-v3.css portfolio.md --pdf */
+
+@import 'default';
+
+/* -------------------
+ * 기본 슬라이드 설정 (흰색 배경)
+ * ------------------- */
+section {
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  font-size: 26px;
+  line-height: 1.6;
+  color: #22222200;
+  padding: 60px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #fff;
+}
+
+/* -------------------
+ * 타이틀 슬라이드 (어두운 배경)
+ * ------------------- */
+section.title {
+  background-color: #fff;
+  color: white; /* 텍스트 흰색 */
+  text-align: left;
+  align-items: flex-start;
+  font-size: 38px;
+  letter-spacing: -0.5px;
+}
+section.title h1 {
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #6effb5; /* 제목 녹색 계열 강조 */
+}
+section.title h3 {
+  font-weight: 400;
+  font-size: 24px;
+  color: #e0e0e0; /* 부제목 (밝은 회색) */
+}
+
+/* -------------------
+ * 섹션 구분 슬라이드 (어두운 배경)
+ * ------------------- */
+section.section {
+  background-color: #64646400; /* 회백 배경 */
+  color: #6effb5; /* 텍스트 녹색 계열 강조 */
+  text-align: left;
+  align-items: flex-start;
+  padding: 100px 80px;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+/* -------------------
+ * 일반 본문 요소 (녹색 강조)
+ * ------------------- */
+h1, h2, h3 {
+  font-weight: 600;
+}
+h1 { 
+  font-size: 36px; 
+  margin-bottom: 20px; 
+  color: #008a00; /* h1 (진한 녹색) */
+}
+h2 { 
+  font-size: 30px; 
+  margin-bottom: 12px; 
+  color: #006400; /* h2 (더 진한 녹색) */
+}
+h3 { 
+  font-size: 26px; 
+  margin-bottom: 10px; 
+  color: #2e8b57; /* h3 (바다 녹색 계열) */
+}
+
+ul {
+  list-style: disc;
+  margin-left: 1.5em;
+}
+
+blockquote {
+  border-left: 6px solid #4CAF50; /* 인용문 (녹색 테두리) */
+  padding-left: 1em;
+  color: #444;
+  font-style: italic;
+}
+
+/* -------------------
+ * 코드 블록
+ * ------------------- */
+code, pre {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  background: #f5f5f5; /* 코드 배경 (흰색과 구분되는 연한 회색) */
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 90%;
+  color: #333; /* 코드 텍스트 색상 */
+}
+pre {
+  border: 1px solid #ddd; /* 코드 테두리 */
+  overflow-x: auto;
+}
+
+/* -------------------
+ * 링크 스타일 (녹색)
+ * ------------------- */
+a {
+  color: #38a169; /* 링크 (녹색 계열) */
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* -------------------
+ * [추가] 텍스트 하이라이트 (Span)
+ * ------------------- */
+span.mark-green {
+  color: #4CAF50; /* 선명한 녹색 */
+}
+span.mark-blue {
+  color: #0070f3; /* 선명한 파란색 */
+}
+span.mark-white {
+  /* 어두운 배경(.title, .section)에서 흰색 텍스트가 
+     기본값이므로, 흰색 배경에서 눈에 띄는 색이 필요.
+     여기서는 기본값(검정)과 다르게 회색으로 지정. */
+  color: #555; 
+}
+
+/* 어두운 배경(title, section) 내부의 span 색상 정의 */
+section.title span.mark-white,
+section.section span.mark-white {
+  color: #ffffff;
+}
+section.title span.mark-green,
+section.section span.mark-green {
+  color: #6effb5; /* 밝은 녹색 */
+}
+section.title span.mark-blue,
+section.section span.mark-blue {
+  color: #69c0ff; /* 밝은 파란색 */
+}
+
+/* -------------------
+ * 페이지 번호
+ * ------------------- */
+section::after {
+  content: attr(data-marpit-pagination);
+  position: absolute;
+  bottom: 24px;
+  right: 40px;
+  font-size: 14px;
+  color: #999; /* 페이지 번호 (회색) */
+}
+
+/* -------------------
+ * 기타 레이아웃
+ * ------------------- */
+section > * + * {
+  margin-top: 0.5em;
+}
+
+section.image-left img {
+  display: block;
+  margin: 0;
+}
+section.image-left {
+  align-items: flex-start;
+  text-align: left;
+}
