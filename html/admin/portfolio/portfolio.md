@@ -46,7 +46,7 @@ style: |
 - 최소의 장애방지를 위한 안정화된 개발 프로그램
 - 사용자 편의 및 안정성을 위한 **DevOps(자동배포 및 스크립트화)**  
 - **트러블 슈팅** (상태 추적, 로그분석, 문제해결)
-- **성능 최적화** (규격화된 보일러플레이트, 협업툴 활용)  
+- **성능 최적화** (규격화된 보일러플레이트, 협업툴 활용)
 
 ---
 
@@ -87,9 +87,10 @@ if (count($pendingMissionCodeList) > 0) {
 }
 return makeResponse(CouponResult::OK, $coupons);
 ```   
-- **[cross-promo](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/crosspromo/crosspromo.php)**  
-  ㅇpen source link:
-`<https://github.com/cowboy779>`
+- **[cross-promotion](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/crosspromo/crosspromo.php)**  
+  쿠폰은 Admin에서 다량 생성해서 서버에서 처리하였지만,
+  `이벤트 쿠폰은 서버에서 요청시 한장씩 동적 생성 후 등록`
+
  
 
 ---
