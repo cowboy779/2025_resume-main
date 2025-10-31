@@ -125,7 +125,6 @@ python /ltcon/account_system/script/job_autoproc.py
 
 ---
 
-<!-- _class: section -->
 ## improvement [0]
 ### 텔렘그램 및 SMTP 중복 방지 및 많은 양의 알림 전송 최적화
 - 비동기 처리 및 재시도 메커니즘 구현으로 안정성 향상
@@ -134,10 +133,16 @@ python /ltcon/account_system/script/job_autoproc.py
   대량의 알림이 발생할 경우, 중복 전송 및 지연 문제 해결을 위해 Lock 과 서브프로세스 Task로 비동기로 개선
 
 ---
-
-<!-- _class: section -->
+<!-- _class: img-small-right -->
 ## improvement [1]
-### 바일로 교환소 이벤트 팝업 디자인 생성
+### 바일로 칩 교환소 팝업 디자인 생성
+![bylo](../bylo_design/bylo_exchange.png)
+
+- **[BYLO EXCHANGE](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/bylo_design/index.html)**  
+  스테이블 코인 기반의 게임 내 재화 교환소  
+  팝업 UI 디자인 및 구현  
+- **[WEMIX](https://wemadetree.gitbook.io/wemix-play-tech-int-guide/about-wemix3.0/account)** 플랫폼 참고
+- HTML5, CSS3, JavaScript(jQuery) 기반의 반응형 웹 디자인
 
 ---
 
