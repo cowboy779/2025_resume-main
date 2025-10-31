@@ -50,24 +50,6 @@ style: |
 
 ---
 
-<!-- _class: section -->
-## Project [0]  
-### Next.js pm2 무중단 배포
-
-- **http server의 close 함수**를 활용  
-- **pm2 reload**를 통해 graceful stop 구현  
-
-```js
-process.on("SIGINT", () => {
-  server.close(err => {
-    if (err) throw err;
-    process.exit(0);
-  });
-});
-```
-
----
-
 <!-- _backgroundImage: url('./images/bg_intro.jpg') -->
 ## Project [0]  
 #### 프로모션 쿠폰 발급 시스템 구축
@@ -87,11 +69,93 @@ if (count($pendingMissionCodeList) > 0) {
 }
 return makeResponse(CouponResult::OK, $coupons);
 ```   
-- **[cross-promotion](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/crosspromo/crosspromo.php)**  
-  쿠폰은 Admin에서 다량 생성해서 서버에서 처리하였지만,
+- **[cross-promotion](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/crosspromo/crosspromo.php)** : 쿠폰은 Admin에서 다량 생성해서 서버에서 처리하였지만,
   `이벤트 쿠폰은 서버에서 요청시 한장씩 동적 생성 후 등록`
 
- 
+
+---
+
+## Project [1]  
+### 라이트컨 웹 고객센터 FAQ 생성  
+###### - **배경:** 구글 스토어 정책을 준수하며, 고객 개인정보 최소수집을 위한 이메일주소로만 페이지 구현  
+###### - **기술 스택:** Python, flask, jinja2, MySQL  
+- **[WEB FAQ](https://wemademax.com/faq)** : 고객센터 FAQ 페이지를 위한 데이터베이스 및 API 구축/ 관리툴 개발  
+- 모바일 및 PC 웹에서 모두 접근 가능하도록 반응형 웹 구현/ 글로벌 서비스 대응
+- 관리자 페이지에서 FAQ 콘텐츠 관리 기능 개발  
+
+---
+
+## Project [2]  
+![Account](../ldap_login/images/account_list.png)  
+### NAS LDAP 연동 및 전환 프로젝트
+###### - **배경:** 내부 사내 NAS 시스템의 사용자 인증 및 권한 관리를 위해 LDAP 연동 
+###### - **기술 스택:** NAS LDAP, Python, Php, MySQL
+
+---
+
+## Project [2]-2  
+- **[LDAP LIST](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/ldap_login/internal.py)** : NAS LDAP 사용자 계정 리스트 조회 및 관리툴 개발
+- 공통 그룹웨어가 아닌 내부에서 사용하기 위해, 사원 입퇴사 관리 조직 그룹망을 구현하기 위해 자동 batch > [batch script 보기](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/ldap_login/python_auto_shell/job_autoproc.py)
+```
+##### run_account.sh crontab 설정 예시
+# 매주 월~금 09:30 ~ 19:30 매 시간 30분마다 실행
+0,30 9-19 * * 1-5 /ltcon/account_site/run_account.sh
+
+##### run_account.sh
+#!/bin/bash
+# 가상 환경 활성화
+source /ltcon/venv/account_system/bin/activate
+# Python 스케쥴링 스크립트 실행
+python /ltcon/account_system/script/job_autoproc.py
+
+```
+
+---
+
+## Project [3]
+### 개발 테스트 서버 상황 및 내부그룹웨어 상황 알림시스템 필요
+###### - **배경:** zabbix 모니터링 시스템과 내부 그룹웨어 상황 및 서버상태 알림을 위한 텔레그램 연동
+###### - **기술 스택:** zabbix, Python, Php, Telegram API, SMTP, Linux
+- **[Telegram-notifier](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/telegrame-smtp-autoload/telegram.py)**  
+  Telegram API Bot 기반 및 SMTP 프로토콜을 사용한 메일 알림 라이브러리  
+- 관리자 알림툴에서 `email, telegram, all` 선택적으로 알림 전송 가능
+
+
+
+
+---
+
+<!-- _class: section -->
+## improvement [0]
+### 텔렘그램 및 SMTP 중복 방지 및 많은 양의 알림 전송 최적화
+- 비동기 처리 및 재시도 메커니즘 구현으로 안정성 향상
+- **[PHP : notifier](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/telegrame-smtp-autoload/job_notify.php)**  =>  **[Python : notifier](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/telegrame-smtp-autoload/python_auto_shell/job_notiqueue.py)**  
+  기존 php 에서는 child process fork 및 프로세스 병렬처리로 제어 구현하였지만, 
+  대량의 알림이 발생할 경우, 중복 전송 및 지연 문제 해결을 위해 Lock 과 서브프로세스 Task로 비동기로 개선
+
+---
+
+<!-- _class: section -->
+## improvement [1]
+### 바일로 교환소 이벤트 팝업 디자인 생성
+
+---
+
+<!-- _class: section -->
+## Project [0]  
+### Next.js pm2 무중단 배포
+
+- **http server의 close 함수**를 활용  
+- **pm2 reload**를 통해 graceful stop 구현  
+
+```js
+process.on("SIGINT", () => {
+  server.close(err => {
+    if (err) throw err;
+    process.exit(0);
+  });
+});
+```
 
 ---
 

@@ -175,7 +175,7 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 ## 🌱 개인 프로젝트
 
 - **[Telegram-notifier](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/telegrame-smtp-autoload/lib/Telegram.php)**  
-  Telegram API Bot 기반 및 SMTP 프로토콜을 사용한 메일 알림 라이브러리  
+  PHP 베이스 Telegram API Bot 기반 및 SMTP 프로토콜을 사용한 메일 알림 라이브러리  
 
 - **[SVNAdmin](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/svn)/Gitea**  
   기존 SVN Tortoise 에서 개발계정 소스 운영관리 및 권한 관리용 웹페이지 이식 및 빌드배포 Git연동 설치형 WEB Gitea 구축
