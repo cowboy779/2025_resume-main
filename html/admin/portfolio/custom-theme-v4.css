@@ -82,3 +82,33 @@ ul {
   list-style: disc;
   margin-left: 1.5em;
 }
+
+/* -------------------
+ * 이미지 위치 조정 클래스
+ * ------------------- */
+.img-small-right img {
+  position: absolute;
+  right: 60px;
+  bottom: 60px;
+  width: 320px;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.img-small-left img {
+  position: absolute;
+  left: 60px;
+  top : 200px;
+  bottom: 60px;
+  width: 640px;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.img-top-center img {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+}
