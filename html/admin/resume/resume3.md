@@ -1,5 +1,4 @@
 
-
 # 오정훈 | Web Developer · DevOps
 
 📍 경기 성남시 분당구
@@ -35,7 +34,7 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 <br>
 
 ## 💼 경력 상세 기술서
-### 라이트컨 LIGHTCON Corp  
+> ### 라이트컨 LIGHTCON Corp  
 ![game](https://img.shields.io/badge/game-2563EB?style=for-the-badge&labelColor=93C5FD)
 **Platform WEB Developer / DevOps**  
 2022.12 ~ 재직 중  
@@ -66,7 +65,7 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 
 ---
 
-### 전국지방의료원 연합회 Medios  
+> ### 전국지방의료원 연합회 Medios  
 ![medical](https://img.shields.io/badge/medical-16A34A?style=for-the-badge&labelColor=86EFAC)
 **Back-end Web Developer**  
 2019.05 ~ 2022.11  
@@ -97,7 +96,7 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 
 ---
 
-### Legacy PHP → Python flask 전환 프로젝트
+> ### Legacy PHP → Python flask 전환 프로젝트
 **기간:** 2025.01 ~ 2025.06   
 **기술:** Python Flask, MySQL, Uwsgi, Nginx, jinja2, fluentd  
 **내용:**  
@@ -110,7 +109,7 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 
 ---
 
-### 홈페이지 신규 모바일 FAQ 페이지 개발 프로젝트
+> ### 홈페이지 신규 모바일 FAQ 페이지 개발 프로젝트
 **기간:** 2024.11 ~ 2025.01  
 **기술:** Python, MySQL, HTML, CSS, JavaScript
 **내용:**  
@@ -122,7 +121,7 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 
 ---
 
-### Google OAuth2 인증 및 로그인 프로젝트
+> ### Google OAuth2 인증 및 로그인 프로젝트
 **기간:** 2024.01 ~ 2024.05  
 **기술:** Python, PHP, Google OAuth2, recaptcha  
 **내용:**  
@@ -132,7 +131,7 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 
 ---
 
-### NAS LDAP 연동 및 전환 프로젝트
+> ### NAS LDAP 연동 및 전환 프로젝트
 **기간:** 2024.03 ~ 2024.06  
 **기술:** Python, PHP, NAS LDAP  
 **내용:**  
@@ -142,7 +141,7 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 
 ---
 
-### 공공의료 WebSquare 차세대 전환 프로젝트
+> ### 공공의료 WebSquare 차세대 전환 프로젝트
 **기간:** 2021.06 ~ 2022.06  
 **기술:** Java, WebSquare5, Oracle DB, Spring Framework, Pl/SQL, Ajax, jQuery  
 **내용:**  
@@ -178,8 +177,8 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 - **[Telegram-notifier](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/telegrame-smtp-autoload/lib/Telegram.php)**  
   Telegram API Bot 기반 및 SMTP 프로토콜을 사용한 메일 알림 라이브러리  
 
-- **[SVNAdmin](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/svn)**  
-  기존 SVN Tortoise 에서 개발계정 소스 운영관리 및 권한 관리용 웹페이지 이식  
+- **[SVNAdmin](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/svn)/Gitea**  
+  기존 SVN Tortoise 에서 개발계정 소스 운영관리 및 권한 관리용 웹페이지 이식 및 빌드배포 Git연동 설치형 WEB Gitea 구축
 
 
 ---
