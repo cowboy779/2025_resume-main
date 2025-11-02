@@ -182,7 +182,7 @@ function GetDocListInfo($id, $pw) {
         // 한 화면에 reCaptcha버튼이 2개 이상일 경우
         var onloadCallback = function() {
           grecaptcha.render('btn_loginOK', {
-            'sitekey' : '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
+            'sitekey' : '<?php echo Config::$RECAPTCHA_SITEKEY; ?>',
             'callback' : onSubmitOK
           });
         };
