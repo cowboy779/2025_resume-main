@@ -9,8 +9,10 @@ style: |
 ---
 
 <!-- _class: title -->
-# 😄🙂 안녕하세요, 지원자 오정훈입니다  
-<!-- ### @CreatiCoding (Creative + Coding)   -->
+>## 사용자의 다양한 편의성, 안정적인 개발환경 제공
+>## 플랫폼과 기술지원에 관심이 많은
+
+# 😄🙂 지원자 오정훈입니다  
 ### <https://github.com/cowboy779>  
 
 ---
@@ -70,7 +72,7 @@ if (count($pendingMissionCodeList) > 0) {
 return makeResponse(CouponResult::OK, $coupons);
 ```   
 - **[cross-promotion](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/crosspromo/crosspromo.php)** : 쿠폰은 Admin에서 다량 생성해서 서버에서 처리하였지만,
-  `이벤트 쿠폰은 서버에서 요청시 한장씩 동적 생성 후 등록`
+  `이벤트 쿠폰은 서버에서 요청시 한장씩 동적 생성 후 등록한 작업이었습니다.`
 
 
 ---
@@ -81,7 +83,7 @@ return makeResponse(CouponResult::OK, $coupons);
 ###### - **기술 스택:** Python, flask, jinja2, MySQL  
 - **[WEB FAQ](https://wemademax.com/faq)** : 고객센터 FAQ 페이지를 위한 데이터베이스 및 API 구축/ 관리툴 개발  
 - 모바일 및 PC 웹에서 모두 접근 가능하도록 반응형 웹 구현/ 글로벌 서비스 대응
-- 관리자 페이지에서 FAQ 콘텐츠 관리 기능 개발  
+- 관리자 페이지에서 FAQ 콘텐츠 관리 기능 개발을 하였습니다.
 
 ---
 
@@ -118,7 +120,7 @@ python /ltcon/account_system/script/job_autoproc.py
 ###### - **기술 스택:** zabbix, Python, Php, Telegram API, SMTP, Linux
 - **[Telegram-notifier](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/telegrame-smtp-autoload/telegram.py)**  
   Telegram API Bot 기반 및 SMTP 프로토콜을 사용한 메일 알림 라이브러리  
-- 관리자 알림툴에서 `email, telegram, all` 선택적으로 알림 전송 가능
+- 관리자 알림툴에서 `email, telegram, all` 선택적으로 알림 전송 가능을 구현하였습니다.
 
 
 
@@ -130,7 +132,7 @@ python /ltcon/account_system/script/job_autoproc.py
 - 비동기 처리 및 재시도 메커니즘 구현으로 안정성 향상
 - **[PHP : notifier](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/telegrame-smtp-autoload/job_notiqueue.php)**  =>  **[Python : notifier](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/telegrame-smtp-autoload/python_auto_shell/job_notiqueue.py)**  
   기존 php 에서는 child process fork 및 프로세스 병렬처리로 제어 구현하였지만, 
-  대량의 알림이 발생할 경우, 중복 전송 및 지연 문제 해결을 위해 Lock 과 서브프로세스 Task로 비동기로 개선
+  대량의 알림이 발생할 경우, 중복 전송 및 지연 문제 해결을 위해 Lock 과 서브프로세스 Task로 비동기로 개선해 보았습니다.
   
 flock으로 동시실행 방지 및 뮤텍스
 ```
@@ -150,7 +152,7 @@ if ((trim(file_get_contents("/proc/".posix_getppid()."/comm")) != 'flock')
 - **[Google Login](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/google/glogin.php)** : 개인을 식별할 수 있는 고유한 정보로 보다 안전하게 이용 및 관리가 필요함
 - 내부에서 쓰던 개인 아이디/이메일 각 운영툴 Google 로그인으로 교체 
 - GCP 에서 클라이언트 통합관리 -> 서버요청시 ID 전달
-- OAuth 2.0 클라이언트 ID 를 부여함으로써 각 운영툴마다 액세스 분리처리
+- OAuth 2.0 클라이언트 ID 를 부여함으로써 각 운영툴마다 액세스 분리처리하여 한곳에서 키를 받을 수있게 관리가 용이해졌습니다.
 
 
 
@@ -165,7 +167,7 @@ if ((trim(file_get_contents("/proc/".posix_getppid()."/comm")) != 'flock')
   스테이블 코인 기반의 게임 내 재화 교환소  
   팝업 UI 디자인 및 구현  
 - **[WEMIX](https://wemadetree.gitbook.io/wemix-play-tech-int-guide/about-wemix3.0/account)** 플랫폼과 연동
-- HTML5, CSS3, JavaScript(jQuery) 기반의 웹 디자인
+- HTML5, CSS3, JavaScript(jQuery) 기반의 웹 디자인 작업도 하였습니다.
 
 ---
 
@@ -173,8 +175,8 @@ if ((trim(file_get_contents("/proc/".posix_getppid()."/comm")) != 'flock')
 ### 홈페이지 운영약관 및 정책 업데이트 관리 개선
  - **[기업윤리 상담센터](https://www.wemademax.com/ethics)** : 신규페이지 개설
  - **[운영정책](https://docs.lightcon.net/policy/ko.html?date=20221104&idx=2#tab2)** : 기존 JS document.write() 형식으로 TEXT AREA 에서 정책을 수정 타이핑 작업하는걸 좀 더 가시성이 좋게 [summernote](https://summernote.org/) > WYSIWYG 도입하여 작업효율 개선
- - 그외 파일 생성하여 정책 수정/저장 하는걸 DB로 이관하여 인덱스 관리화로 개선
-(속도 및 잦은 정책변화로 인한 버전업관리 용이)
+ - 그외 파일 생성하여 정책 수정/저장 하는걸 DB로 이관하여 인덱스 관리화로 개선해서 실제 운영팀에서 다량의 텍스트를 등록 현업에서 빠르게 처리할 수 있게 수정하였습니다.
+(속도 및 잦은 정책변화로 인한 버전관리 용이해짐)
 
 
 
@@ -203,7 +205,7 @@ header("X-Frame-Options: SAMEORIGIN");
 ## security aspect [1]
 ### Bot 방지 및 개발계정 비밀번호 변경 및 다량의 초기화 메일 송신방지
 - [reCaptcha](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/recaptcha/recaptcha.php) : 일부 <span class="mark-blue">Google Login</span>이 적용 안된 내부사이트 보안을 위해 API 이용하여 방지
-- 또한 자체 내부 비밀번호 검증 및 OTP 를 통한 2FA 보안
+- 또한 자체 내부 비밀번호 검증 및 OTP 를 통한 2FA 보안하였습니다.
 
 ---
 
@@ -287,7 +289,7 @@ server {
 
 ---
 ## 기술지원 Infra DevOps [4]
-- Mysql dump 백업관리
+- Mysql dump 백업관리 쉘을 통해 다른서버에 이중화
 ```
 db_backup.sh
 ssh localhost "mysqldump -u testdump -p dumptable > _backup.sql"
