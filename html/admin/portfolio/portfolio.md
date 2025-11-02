@@ -122,69 +122,212 @@ python /ltcon/account_system/script/job_autoproc.py
 
 
 
-
 ---
+
 
 ## improvement [0]
 ### 텔렘그램 및 SMTP 중복 방지 및 많은 양의 알림 전송 최적화
 - 비동기 처리 및 재시도 메커니즘 구현으로 안정성 향상
-- **[PHP : notifier](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/telegrame-smtp-autoload/job_notify.php)**  =>  **[Python : notifier](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/telegrame-smtp-autoload/python_auto_shell/job_notiqueue.py)**  
+- **[PHP : notifier](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/telegrame-smtp-autoload/job_notiqueue.php)**  =>  **[Python : notifier](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/telegrame-smtp-autoload/python_auto_shell/job_notiqueue.py)**  
   기존 php 에서는 child process fork 및 프로세스 병렬처리로 제어 구현하였지만, 
   대량의 알림이 발생할 경우, 중복 전송 및 지연 문제 해결을 위해 Lock 과 서브프로세스 Task로 비동기로 개선
+  
+flock으로 동시실행 방지 및 뮤텍스
+```
+if ((trim(file_get_contents("/proc/".posix_getppid()."/comm")) != 'flock')
+        && (int)exec("pgrep -c -f '".basename(__FILE__)."'") > 1)
+{
+  exit;
+}
+```
+
+---
+
+## improvement [1]
+### Google OAuth2 API 이용한 운영툴 로그인 통합
+###### - **배경:** 정보통신망 이용촉진 및 정보보호 등에 관한 법률 및 ISO 보안심사 대응
+###### - **기술 스택:** GCP, Google API
+- **[Google Login](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/google/glogin.php)** : 개인을 식별할 수 있는 고유한 정보로 보다 안전하게 이용 및 관리가 필요함
+- 내부에서 쓰던 개인 아이디/이메일 각 운영툴 Google 로그인으로 교체 
+- GCP 에서 클라이언트 통합관리 -> 서버요청시 ID 전달
+- OAuth 2.0 클라이언트 ID 를 부여함으로써 각 운영툴마다 액세스 분리처리
+
+
+
 
 ---
 <!-- _class: img-small-right -->
-## improvement [1]
+## improvement [2]
 ### 바일로 칩 교환소 팝업 디자인 생성
 ![bylo](../bylo_design/bylo_exchange.png)
 
 - **[BYLO EXCHANGE](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/bylo_design/index.html)**  
   스테이블 코인 기반의 게임 내 재화 교환소  
   팝업 UI 디자인 및 구현  
-- **[WEMIX](https://wemadetree.gitbook.io/wemix-play-tech-int-guide/about-wemix3.0/account)** 플랫폼 참고
-- HTML5, CSS3, JavaScript(jQuery) 기반의 반응형 웹 디자인
+- **[WEMIX](https://wemadetree.gitbook.io/wemix-play-tech-int-guide/about-wemix3.0/account)** 플랫폼과 연동
+- HTML5, CSS3, JavaScript(jQuery) 기반의 웹 디자인
 
 ---
 
-<!-- _class: section -->
-## Project [0]  
-### Next.js pm2 무중단 배포
+## improvement [3]
+### 홈페이지 운영약관 및 정책 업데이트 관리 개선
+ - **[기업윤리 상담센터](https://www.wemademax.com/ethics)** : 신규페이지 개설
+ - **[운영정책](https://docs.lightcon.net/policy/ko.html?date=20221104&idx=2#tab2)** : 기존 JS document.write() 형식으로 TEXT AREA 에서 정책을 수정 타이핑 작업하는걸 좀 더 가시성이 좋게 [summernote](https://summernote.org/) > WYSIWYG 도입하여 작업효율 개선
+ - 그외 파일 생성하여 정책 수정/저장 하는걸 DB로 이관하여 인덱스 관리화로 개선
+(속도 및 잦은 정책변화로 인한 버전업관리 용이)
 
-- **http server의 close 함수**를 활용  
-- **pm2 reload**를 통해 graceful stop 구현  
 
-```js
-process.on("SIGINT", () => {
-  server.close(err => {
-    if (err) throw err;
-    process.exit(0);
-  });
-});
+
+---
+
+## security aspect [0]
+### ROS 홈페이지 관련 Clickjacking  
+- 재화 교환소 의도치 않은 접근방지
+- 온라인 샵 구매 및 월렛 이용 후 토큰교환시  
+
+X-Frame-Options
+```
+Nginx
+add_header Content-Security-Policy "default-src 'self'; frame-ancestors 'self';" always;
+add_header X-Frame-Options "DENY" always;
+```
+Response header에 보안 옵션 추가
+```
+PHP
+header("Content-Security-Policy: frame-ancestors 'self' https://www.riseofstars.io;");
+header("X-Frame-Options: SAMEORIGIN");
 ```
 
 ---
-
 <!-- _class: section -->
-<!-- _backgroundImage: url('./images/bg_intro.jpg') -->
-## introduce [0]
-**안녕하세요!**  
-저는 **<span class="mark-blue">효율과 가독성</span>** 을 추구하는  
-Front-end 개발자 **<span class="en">OMaLang</span>** 입니다.
+## security aspect [1]
+### Bot 방지 및 개발계정 비밀번호 변경 및 다량의 초기화 메일 송신방지
+- [reCaptcha](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/recaptcha/recaptcha.php) : 일부 <span class="mark-blue">Google Login</span>이 적용 안된 내부사이트 보안을 위해 API 이용하여 방지
+- 또한 자체 내부 비밀번호 검증 및 OTP 를 통한 2FA 보안
 
 ---
 
 <!-- _class: section -->
-## 주요 기술
-- Vue.js / React
-- **<span class="mark-green">DevOps</span>** 경험: CI/CD, AWS
-- 협업: GitHub Actions, Slack, Jira  
+## security aspect [2]
 
-![|width=60%](./images/devops_chart.png)
 
 ---
 
 <!-- _class: section -->
-<!-- _backgroundImage: url('./images/bg_thanks.jpg') -->
+## 기술지원 Infra DevOPS [0]
+ - 특정 port 허용 및 원외에서 들어오는 외부 방화벽 관리
+ - 테스트 개발 VM 생성 및 특정 IP allow 작업
+ - Login 유저 생성 및 SSH Shell 권한 부여 작업 
+```
+useradd test123
+mkdir -p /home/test123/.ssh
+vi /home/test123/.ssh/authorized_keys
+visudo -f /etc/sudoers
+ps -ef
+```
+
+---
+<!-- _class: section -->
+## 기술지원 Infra DevOps [1]
+ - 트러블 슈팅 에러로그 관리
+ - VM 용량 증가 및 swap 관리
+```
+1. vm 용량 조정
+2. df-h 디스크 용량 확인
+3. growpart /dev/sda 3
+4. resize2fs /dev/sda3 (파일시스템이 ext4 일때)
+5. xfs_growfs /dev/sda3 (파일시스템이 xfs 일때)
+6. df -h
+7. lsblk
+```
+
+
+---
+
+## 기술지원 Infra DevOps [2]
+### ISO 대응 각종 취약점 미비된 환경 방어
+ - SQL 인젝션 파라미터 URL 호출 및 방어(SQL Prepared)
+```php
+$where = "COUPONID=:couponId";
+$bind = [":couponId" => $couponID];
+$couponData = SQLDBWrapper::GetSQLDB()->select(DBTable::COUPON_DATA, $where, $bind);
+```
+ - 응답헤더 버전 정보 노출 숨김처리
+```
+php
+[root@localhost ~]# vim /etc/php.ini 
+;expose_php = On
+expose_php = Off
+nginx 
+[root@localhost ~]# vim /etc/nginx/nginx.conf
+### version hide
+server_tokens off; --추가
+```
+
+---
+## 기술지원 Infra DevOps [3]
+- Nginx 리버스 프록시 관리 및 포워딩 연결설정
+- Nginx websocket 연결설정
+```
+nginx
+server {
+    listen   8080 ssl default_server;
+    include  /etc/nginx/ssl/_ssl_net.setting;
+    location / {
+        proxy_pass http://localhost:8001;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_http_version 1.1;# 
+        proxy_set_header Upgrade $http_upgrade;# 
+        proxy_set_header Connection "upgrade";# 
+        proxy_set_header Host $host;#
+    }
+}
+```
+
+---
+## 기술지원 Infra DevOps [4]
+- Mysql dump 백업관리
+```
+db_backup.sh
+ssh localhost "mysqldump -u testdump -p dumptable > _backup.sql"
+scp 127.0.0.1:~/_backup.sql ./
+mysql -h test.com -u testdump -p testdump < _backup.sql
+```
+
+
+---
+
+## 기술지원 Infra DevOps [5]
+- fluentd 브로커 로그 관리(파일로 생성하여 전달 및 Bigquery나 운영 로그뷰어사용)
+```php
+static public function saveErrFile($message, $type) {
+        $date = date("Ymd", time());
+        $fileName = "{$type}_{$date}.err";
+        file_put_contents(Config::LOG_PATH . $fileName, $message . "\n", FILE_APPEND);
+    }
+```
+```
+<source> #fluentd.conf
+  @type tail
+  path /cowboy779/log/error/*_%Y%m%d.err
+  pos_file /var/log/td-agent/_system.err.pos
+  read_from_head true
+  <parse>
+    @type json
+    time_key LOGTM
+  ...
+</source>
+  ```
+
+
+
+
+
+
+---
+
+<!-- _class: section -->
 # Thanks for Reading 🙌
 
 | 구분 | 링크 |
