@@ -1,0 +1,882 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="medios.cmm.cod.etc.lifecenter.mapper.LifeCenterMapper">
+	
+	<select id="selectLifeGicho" resultType="mData">
+		select managerId as manager_Id,
+			   to_char(sDate, 'yyyy-mm-dd') as s_Date,
+			   to_char(eDate, 'yyyy-mm-dd') as e_Date,
+			   aeskey as aeskey,
+			   url as url,
+	      	   careagencycode as careagencycode,
+			   centercode as centercode
+		  from 생활치료기초 
+		 where sysdate between TO_char(sdate, 'YYYYMMDD') and TO_char(edate,'YYYYMMDD')
+	</select>
+	
+	<select id="selectTabList" parameterType="mData" resultType="mData">
+		SELECT column_Name as column_Name,
+		 		 data_Type as data_Type,
+		 	   data_Length as data_Length,
+		 	data_Precision as data_Precision,
+		 	    data_Scale as data_Scale,
+		 	      nullable as nullable,
+		 	            '' as unique_Flag,
+		 	    table_Name as table_Name,
+		 	     column_Id as column_Id
+       	  FROM ALL_TAB_COLUMNS
+         WHERE owner ='CLI'  
+           and TABLE_NAME = #{searchTb}
+         ORDER BY column_Id
+	</select>
+	
+	<select id="selectBoardDetailList" resultType="mData" parameterType="mData">
+		SELECT 
+			<foreach item="column" index="index" collection="lists" open="" separator="," close="">
+				<choose>
+				   <when test="column.dataType.toString()== 'DATE'">
+					TO_CHAR(${column.columnName} ,'yyyyMMdd') as col${index}
+				   </when>
+				   <otherwise>
+				   	${column.columnName} as col${index}
+				   </otherwise>								
+			   </choose>
+			</foreach>
+			   , ROWIDTOCHAR(ROWID) as col_Rowid
+		  FROM ${searchTb}
+		 WHERE  1=1
+
+		<if test="searchCondition != null and !searchCondition.equals('') ">
+			<![CDATA[
+			   AND ${searchCondition} LIKE #{searchKeyword} || '%'
+			]]>
+		</if>
+
+		<![CDATA[
+			ORDER BY 1,2
+		]]>
+	</select>
+	
+	<select id="selectPatientInfoList" resultType="mData" parameterType="mData">
+		SELECT 
+				EMR등록번호 as col0, 
+				환자이름 as col1, 
+				성별 as col2, 
+				to_char(생년월일, 'yyyy-mm-dd') as col3,
+				호 as col4, 
+				(substr(replace(환자전화번호,'-'),1,3)||'-'||substr(substr(replace(환자전화번호,'-'),4),1, (length(substr(replace(환자전화번호,'-'),4))- 4) )||'-'||substr(replace(환자전화번호,'-'),-4)) as col5,
+				to_char(입소일자, 'yyyy-mm-dd') as col6, 
+				to_char(nvl(상태변경일, '2049-12-31'), 'yyyy-mm-dd') as col7, 
+				상태 as col8,
+				ROWIDTOCHAR(ROWID) as col_Rowid
+		  FROM 생활치료환자정보
+		 WHERE 1=1
+		<![CDATA[
+			   AND substr(상태,1,1) not in('R', 'E')
+			   AND 치료대상유무 = 'Y'
+			   AND nvl(trim(EMR등록번호),'x') = 'x'
+		]]>
+		<![CDATA[
+			ORDER BY 입소일자 DESC
+		]]>
+	</select>
+	
+	<select id="selectLostNumList" resultType="mData" parameterType="mData">
+		select y.병록번호 as col0,
+			   y.FULLNAME as col1,
+			   to_char(y.생년월일, 'yyyy-mm-dd') as col2,
+			   y.주민등록번호 as col3,
+			   y.성별코드 as col4,
+			   y.핸드폰 as col5,
+			   to_char(y.등록일자, 'yyyy-mm-dd') as col6,
+			   to_char(x.퇴록일자, 'yyyy-mm-dd') as col7
+		  from 관리대상자 x, 환자 y
+		 where 1=1
+		<![CDATA[
+				and  x.관리구분 = 'H'
+			    and  x.삭제여부 = 'N'
+				and  x.병록번호 = y.병록번호
+				and (replace(y.핸드폰,'-','') = #{patientPhone} or y.fullname = #{patientName} or y.생년월일 = #{birthDate})
+		]]>
+		<![CDATA[
+			ORDER BY FULLNAME
+		]]>
+	</select>
+	
+	<update id="updateLostNum" parameterType="mData">
+    	UPDATE 생활치료환자정보
+		   SET EMR등록번호 = #{col0}
+		 WHERE rowid = #{colRowid}
+    </update>
+	
+	<!-- 	환자등록번호 스펠링주의 	   		 
+ 		request - patientNumber 	 
+ 		respone - patientId > patinetId  -->
+<!-- 	<update id="insertPatientInfoList" parameterType="mData">
+			MERGE INTO 생활치료환자정보 a
+					USING DUAL
+						<![CDATA[	
+ 							ON (a.환자이름 = #{patientName} and a.생년월일 = to_date(#{birthDate},'yyyy-MM-dd') and a.환자전화번호= #{patientPhone})									
+ 						]]>
+				WHEN MATCHED THEN
+				UPDATE SET
+					a.환자등록번호 = #{patinetId},
+					a.성별 = #{gender}, 
+					a.동 = #{wardNumber}, 
+					a.호 = #{roomNumber}, 
+					a.입소일자 = to_date(#{hospitalizationDate},'yyyy-MM-dd HH24:MI'), 
+					a.상태 = #{state}, 
+					a.센터코드 = #{centerCode}, 
+					a.보호자전화번호 = #{guardianPhone}, 
+					a.증상시작일 = to_date(#{symptomDate},'yyyy-MM-dd HH24:MI'), 
+					a.확진일 = to_date(#{confirmationDate},'yyyy-MM-dd HH24:MI'), 
+					a.상태변경일 = to_date(#{disisolationDate},'yyyy-MM-dd HH24:MI'), 
+					a.기저질환유무 = #{basalDiseaseYn}, 
+					a.최근약복용유무 = #{drugYn}, 
+					a.약이름 = #{drugContent},
+					a.임신유무 = #{pregnancyStatus}, 
+					a.임신주차 = #{pregnancyWeek}, 
+					a.담당의료진 = #{doctorId}, 
+					a.퇴소예정일 = to_date(#{dischargeDate},'yyyy-MM-dd HH24:MI') 
+				WHEN NOT MATCHED THEN 
+					INSERT (  
+					a.환자등록번호, a.환자이름, a.성별, a.동, a.호, 
+					a.입소일자, a.상태, a.센터코드, a.생년월일, a.환자전화번호, a.보호자전화번호, 
+					a.증상시작일, a.확진일, a.상태변경일, a.기저질환유무, a.최근약복용유무, a.약이름, 
+					a.임신유무, a.임신주차, a.담당의료진, a.퇴소예정일, a.INSERT일시
+					) VALUES ( 
+					#{patinetId}, #{patientName}, #{gender}, #{wardNumber}, #{roomNumber}, 
+					to_date(#{hospitalizationDate},'yyyy-MM-dd HH24:MI'), #{state}, #{centerCode}, to_date(#{birthDate},'yyyy-MM-dd'), #{patientPhone}, #{guardianPhone},
+					to_date(#{symptomDate},'yyyy-MM-dd HH24:MI'), to_date(#{confirmationDate},'yyyy-MM-dd HH24:MI'), to_date(#{disisolationDate},'yyyy-MM-dd HH24:MI'), #{basalDiseaseYn}, #{drugYn}, #{drugContent}, 
+					#{pregnancyStatus}, #{pregnancyWeek}, #{doctorId}, to_date(#{dischargeDate},'yyyy-MM-dd HH24:MI'), to_date(sysdate,'yyyy-MM-dd HH24:MI')
+					)
+	</update>
+	-->
+	
+	<!-- 
+	 -22.01.14 오정훈
+	merge into using 절 안에는 중복이 허용안됨
+	리스트로 만들시 중복도 같이 있기떄문에 쿼리에러
+	rownum를 지정해 가장 나중에 들어온것만 커밋(어차피 마지막걸로 갱신되기 때문) *중복제거
+	 -22.01.27 
+	상태값 오배정,기타 제외 substr(state,1,1) not in('E','R')
+	-->
+	<update id="insertPatientInfoList" parameterType="Map">
+		MERGE INTO 생활치료환자정보 a
+			USING (
+				   WITH life_info AS
+			        (
+					select rownum r, b1.* from
+												(
+												<foreach item="item" index="index" collection="lists" open="" separator="UNION ALL" close="">
+													SELECT 
+														#{item.patinetId} as patinetId,
+														#{item.patientName} as patientName,
+														#{item.gender} as gender, 
+														#{item.wardNumber} as wardNumber, 
+														#{item.roomNumber} as roomNumber, 
+														to_char(to_date(#{item.hospitalizationDate},'yyyy-MM-dd HH24:MI'),'yyyy-MM-dd HH24:MI') as hospitalizationDate, 
+														#{item.state} as state, 
+														#{item.centerCode} as centerCode,
+														to_char(to_date(#{item.birthDate},'yyyy-MM-dd'), 'yyyy-mm-dd') as birthDate,
+														#{item.patientPhone} as patientPhone,
+														#{item.guardianPhone} as guardianPhone, 
+														to_char(to_date(#{item.symptomDate},'yyyy-MM-dd HH24:MI'), 'yyyy-MM-dd HH24:MI') as symptomDate, 
+														to_char(to_date(#{item.confirmationDate},'yyyy-MM-dd HH24:MI'), 'yyyy-MM-dd HH24:MI') as confirmationDate, 
+														to_char(to_date(#{item.disisolationDate},'yyyy-MM-dd HH24:MI'), 'yyyy-MM-dd HH24:MI') as disisolationDate, 
+														#{item.basalDiseaseYn} as basalDiseaseYn, 
+														#{item.drugYn} as drugYn, 
+														#{item.drugContent} as drugContent,
+														#{item.pregnancyStatus} as pregnancyStatus, 
+														#{item.pregnancyWeek} as pregnancyWeek, 
+														#{item.doctorId} as doctorId, 
+														to_char(to_date(#{item.dischargeDate},'yyyy-MM-dd HH24:MI'), 'yyyy-MM-dd HH24:MI') as dischargeDate
+													FROM DUAL
+												</foreach>
+												) b1
+										  where substr(state,1,1) not in('E','R')
+					)
+					select * from(
+									select rank() over( partition by lf.patientName,lf.patientPhone order by r desc ) ran, 
+								       lf.patinetId,
+								       lf.patientName,
+								       lf.gender,
+								       lf.wardNumber,
+								       lf.roomNumber,
+								       lf.hospitalizationDate,
+								       lf.state,
+								       lf.centerCode,
+								       lf.birthDate,
+								       lf.patientPhone,
+								       lf.guardianPhone,
+								       lf.symptomDate,
+								       lf.confirmationDate,
+								       lf.disisolationDate,
+								       lf.basalDiseaseYn,
+								       lf.drugYn,
+								       lf.drugContent,
+								       lf.pregnancyStatus,
+								       lf.pregnancyWeek,
+								       lf.doctorId,
+								       lf.dischargeDate
+									 from life_info lf
+								)
+					       where ran=1
+				) b
+			<![CDATA[	
+				ON (a.환자이름 = b.patientName and a.생년월일 = to_date(b.birthDate ,'yyyy-MM-dd') and a.환자전화번호= b.patientPhone)									
+			]]>
+				WHEN MATCHED THEN
+				UPDATE SET
+					a.환자등록번호 = b.patinetId,
+					a.성별 = b.gender, 
+					a.동 = b.wardNumber, 
+					a.호 = b.roomNumber, 
+					a.입소일자 = to_date(b.hospitalizationDate,'yyyy-MM-dd HH24:MI'), 
+					a.상태 = b.state, 
+					a.센터코드 = b.centerCode, 
+					a.보호자전화번호 = b.guardianPhone, 
+					a.증상시작일 = to_date(b.symptomDate,'yyyy-MM-dd HH24:MI'), 
+					a.확진일 = to_date(b.confirmationDate,'yyyy-MM-dd HH24:MI'), 
+					a.상태변경일 = to_date(b.disisolationDate,'yyyy-MM-dd HH24:MI'), 
+					a.기저질환유무 = b.basalDiseaseYn, 
+					a.최근약복용유무 = b.drugYn, 
+					a.약이름 = b.drugContent,
+					a.임신유무 = b.pregnancyStatus, 
+					a.임신주차 = b.pregnancyWeek, 
+					a.담당의료진 = b.doctorId, 
+					a.퇴소예정일 = to_date(b.dischargeDate,'yyyy-MM-dd HH24:MI') 
+				WHEN NOT MATCHED THEN 
+					INSERT (  
+					a.환자등록번호, a.환자이름, a.성별, a.동, a.호, 
+					a.입소일자, a.상태, a.센터코드, a.생년월일, a.환자전화번호, a.보호자전화번호, 
+					a.증상시작일, a.확진일, a.상태변경일, a.기저질환유무, a.최근약복용유무, a.약이름, 
+					a.임신유무, a.임신주차, a.담당의료진, a.퇴소예정일, a.INSERT일시
+					) VALUES ( 
+					b.patinetId, b.patientName, b.gender, b.wardNumber, b.roomNumber, 
+					to_date(b.hospitalizationDate,'yyyy-MM-dd HH24:MI'), b.state, b.centerCode, to_date(b.birthDate,'yyyy-MM-dd'), b.patientPhone, b.guardianPhone,
+					to_date(b.symptomDate,'yyyy-MM-dd HH24:MI'), to_date(b.confirmationDate,'yyyy-MM-dd HH24:MI'), to_date(b.disisolationDate,'yyyy-MM-dd HH24:MI'), b.basalDiseaseYn, b.drugYn, b.drugContent, 
+					b.pregnancyStatus, b.pregnancyWeek, b.doctorId, to_date(b.dischargeDate,'yyyy-MM-dd HH24:MI'), to_date(sysdate,'yyyy-MM-dd HH24:MI')
+					)
+	</update>
+	
+	<!--환자등록번호 스펠링주의 	   		
+		request - patientNumber 	
+	 	respone - patientId > patinetId -->
+	<update id="insertSurvey" parameterType="Map">
+		MERGE INTO 생활치료문진정보 a
+					USING 
+						 (
+						   WITH life_info AS
+					        (
+							select rownum r, b1.* from
+														(
+														<foreach item="item" index="index" collection="lists" open="" separator="UNION ALL" close="">
+															SELECT 
+																#{item.patinetId} as patinetId,
+																#{item.patientName} as patientName,
+																#{item.patientPhone} as patientPhone,
+																to_char(to_date(#{item.birthDate},'yyyy-MM-dd'), 'yyyy-mm-dd') as birthDate,
+																#{item.feverCheck} as feverCheck, 
+																#{item.coughCheck} as coughCheck, 
+																#{item.colic} as colic, 
+																#{item.coldFitCheck} as coldFitCheck, 
+																#{item.sputumCheck} as sputumCheck,
+																#{item.ocinCheck} as ocinCheck,
+																#{item.feverRight} as feverRight,
+																#{item.feverLeft} as feverLeft,
+																#{item.fatigueCheck} as fatigueCheck,
+																#{item.etcCheck} as etcCheck,
+																#{item.etcContent} as etcContent,
+																#{item.chestPain} as chestPain,
+																#{item.noseCheck} as noseCheck,
+																#{item.vomitingCheck} as vomitingCheck,
+																#{item.musclePain} as musclePain,
+																#{item.soreThroatCheck} as soreThroatCheck,
+																#{item.diarrheaCheck} as diarrheaCheck,
+																#{item.headacheCheck} as headacheCheck,
+																#{item.dyspenaCheck} as dyspenaCheck,
+																#{item.pulseRate} as pulseRate,
+																#{item.respirationRate} as respirationRate,
+																#{item.bloodPressureLevel} as bloodPressureLevel,
+																#{item.oxygenSaturation} as oxygenSaturation
+															FROM DUAL
+														</foreach>
+														) b1
+							)
+							select * from(
+											select rank() over( partition by lf.patientName,lf.patientPhone order by r desc ) ran, 
+										       lf.patinetId,
+										       lf.patientName,
+										       lf.patientPhone,
+										       lf.birthDate,
+										       lf.feverCheck,
+										       lf.coughCheck,
+										       lf.colic,
+										       lf.coldFitCheck,
+										       lf.sputumCheck,
+										       lf.ocinCheck,
+										       lf.feverRight,
+										       lf.feverLeft,
+										       lf.fatigueCheck,
+										       lf.etcCheck,
+										       lf.etcContent,
+										       lf.chestPain,
+										       lf.noseCheck,
+										       lf.vomitingCheck,
+										       lf.musclePain,
+										       lf.soreThroatCheck,
+										       lf.diarrheaCheck,
+										       lf.headacheCheck,
+										       lf.dyspenaCheck,
+										       lf.pulseRate,
+										       lf.respirationRate,
+										       lf.bloodPressureLevel,
+										       lf.oxygenSaturation
+											 from life_info lf
+										)
+							       where ran=1
+						) b
+					<![CDATA[	
+						ON (a.환자이름 = b.patientName and a.생년월일 = to_date(b.birthDate ,'yyyy-MM-dd') and a.환자전화번호= b.patientPhone)									
+					]]>
+				WHEN MATCHED THEN
+				UPDATE SET
+					a.환자등록번호 = b.patinetId,
+					a.열 = b.feverCheck, 
+					a.기침 = b.coughCheck, 
+					a.복통 = b.colic, 
+					a.오한 = b.coldFitCheck, 
+					a.가래 = b.sputumCheck, 
+					a.오심 = b.ocinCheck, 
+					a.체온좌측 = b.feverRight, 
+					a.체온우측 = b.feverLeft, 
+					a.권태감 = b.fatigueCheck,
+					a.기타 = b.etcCheck, 
+					a.기타내용 = b.etcContent, 
+					a.흉통 = b.chestPain, 
+					a.콧물 = b.noseCheck,
+					a.구토 = b.vomitingCheck, 
+					a.근육통 = b.musclePain, 
+					a.인후통 = b.soreThroatCheck, 
+					a.설사 = b.diarrheaCheck, 
+					a.두통 = b.headacheCheck,
+					a.호흡곤란 = b.dyspenaCheck,
+					a.맥박수 = b.pulseRate, 
+					a.호흡수 = b.respirationRate,
+					a.혈압 = b.bloodPressureLevel,
+					a.산소포화도 = b.oxygenSaturation
+				WHEN NOT MATCHED THEN 
+					INSERT (  
+					a.환자등록번호, a.환자이름, a.환자전화번호, a.생년월일, a.열, a.기침,
+					a.복통, a.오한, a.가래, a.오심, a.체온좌측, a.체온우측, 
+					a.권태감, a.기타, a.기타내용, a.흉통, a.콧물, a.구토, 
+					a.근육통, a.인후통, a.설사, a.두통, a.호흡곤란, a.맥박수,
+					a.호흡수, a.혈압, a.산소포화도
+					) VALUES ( 
+					b.patinetId, b.patientName, b.patientPhone, to_date(b.birthDate,'yyyy-MM-dd'), b.feverCheck, b.coughCheck,
+					b.colic, b.coldFitCheck, b.sputumCheck, b.ocinCheck, b.feverRight, b.feverLeft,
+					b.fatigueCheck, b.etcCheck, b.etcContent, b.chestPain, b.noseCheck, b.vomitingCheck, 
+					b.musclePain, b.soreThroatCheck, b.diarrheaCheck, b.headacheCheck, b.dyspenaCheck, b.pulseRate,
+					b.respirationRate, b.bloodPressureLevel, b.oxygenSaturation
+					)
+	</update>
+	
+	<!-- 	환자등록번호 스펠링주의 	   		-->
+	<!--	request - patientNumber 	-->
+	<!-- 	respone - patientId > patinetId -->
+	<!-- 파티션절에 세부내역 추가 lf.createDate -->
+	<update id="insertSymptom" parameterType="Map">
+	MERGE INTO 생활치료증상정보 a
+					USING (
+						   WITH life_info AS
+					        (
+							select rownum r, b1.* from
+														(
+														<foreach item="item" index="index" collection="lists" open="" separator="UNION ALL" close="">
+															SELECT 
+																#{item.patinetId} as patinetId,
+																#{item.patientName} as patientName,
+																#{item.patientPhone} as patientPhone,
+																to_char(to_date(#{item.birthDate},'yyyy-MM-dd'), 'yyyy-mm-dd') as birthDate,
+																#{item.coughCheck} as coughCheck, 
+																#{item.dyspenaCheck} as dyspenaCheck, 
+																#{item.musclePain} as musclePain, 
+																#{item.headacheCheck} as headacheCheck, 
+																#{item.soreThroatCheck} as soreThroatCheck, 
+																#{item.smellPlateCheck} as smellPlateCheck, 
+																#{item.fatigueCheck} as fatigueCheck, 
+																#{item.appetiteLossCheck} as appetiteLossCheck, 
+																#{item.sputumCheck} as sputumCheck, 
+																#{item.ocinCheck} as ocinCheck, 
+																#{item.vomitingCheck} as vomitingCheck, 
+																#{item.diarrheaCheck} as diarrheaCheck, 
+																#{item.dizzinessCheck} as dizzinessCheck, 
+																#{item.noseCheck} as noseCheck, 
+																#{item.etcCheck} as etcCheck, 
+																#{item.etcContent} as etcContent, 
+																#{item.recordedByName} as recordedByName, 
+																#{item.recordedById} as recordedById, 
+																to_char(to_date(#{item.createDate},'yyyy-MM-dd HH24:MI:SS'), 'yyyy-MM-dd HH24:MI:SS') as createDate
+															FROM DUAL
+														</foreach>
+														) b1
+							)
+							select * from(
+											select rank() over( partition by lf.patientName,lf.createDate order by r desc ) ran, 
+										       lf.patinetId,
+										       lf.patientName,
+										       lf.patientPhone,
+										       lf.birthDate,
+										       lf.coughCheck,
+										       lf.dyspenaCheck,
+										       lf.musclePain,
+										       lf.headacheCheck,
+										       lf.soreThroatCheck,
+										       lf.smellPlateCheck,
+										       lf.fatigueCheck,
+										       lf.appetiteLossCheck,
+										       lf.sputumCheck,
+										       lf.ocinCheck,
+										       lf.vomitingCheck,
+										       lf.diarrheaCheck,
+										       lf.dizzinessCheck,
+										       lf.noseCheck,
+										       lf.etcCheck,
+										       lf.etcContent,
+										       lf.recordedByName,
+										       lf.recordedById,
+										       lf.createDate
+											 from life_info lf
+										)
+							       where ran=1
+						) b
+					<![CDATA[	
+						ON (a.환자이름 = b.patientName and a.생년월일 = to_date(b.birthDate ,'yyyy-MM-dd') and a.환자전화번호= b.patientPhone
+						and a.생성시간 = to_date(b.createDate, 'yyyy-MM-dd HH24:MI:SS')
+						)
+					]]>
+				WHEN MATCHED THEN
+				UPDATE SET
+					a.환자등록번호 = b.patinetId,
+					a.기침 = b.coughCheck, 
+					a.호흡곤란 = b.dyspenaCheck,
+					a.근육통 = b.musclePain, 
+					a.두통 = b.headacheCheck,
+					a.인후통 = b.soreThroatCheck, 
+					a.후각미각손실 = b.smellPlateCheck, 
+					a.피로 = b.fatigueCheck, 
+					a.식욕감소 = b.appetiteLossCheck, 
+					a.가래 = b.sputumCheck, 
+					a.오심 = b.ocinCheck, 
+					a.구토 = b.vomitingCheck, 
+					a.설사 = b.diarrheaCheck, 
+					a.어지러움 = b.dizzinessCheck,
+					a.콧물 = b.noseCheck,
+					a.기타 = b.etcCheck, 
+					a.기타내용 = b.etcContent, 
+					a.입력자 = b.recordedByName,
+					a.입력자ID = b.recordedById
+					<!-- a.입력시간 = to_date(#{recordedByDate},'yyyy-MM-dd HH24:MI') 입력시간 이상하게보내줌 -->
+				WHEN NOT MATCHED THEN 
+					INSERT (  
+					a.환자등록번호, a.환자이름, a.환자전화번호, a.생년월일, a.기침, a.호흡곤란,
+					a.근육통, a.두통, a.인후통, a.후각미각손실, a.피로, a.식욕감소, 
+					a.가래, a.오심, a.구토, a.설사, a.어지러움, a.콧물, 
+					a.기타, a.기타내용, a.입력자, a.입력자ID, a.생성시간
+					) VALUES ( 
+					b.patinetId, b.patientName, b.patientPhone, to_date(b.birthDate,'yyyy-MM-dd'), b.coughCheck, b.dyspenaCheck,
+					b.musclePain, b.headacheCheck, b.soreThroatCheck, b.smellPlateCheck, b.fatigueCheck, b.appetiteLossCheck,
+					b.sputumCheck, b.ocinCheck, b.vomitingCheck, b.diarrheaCheck, b.dizzinessCheck, b.noseCheck, 
+					b.etcCheck, b.etcContent, b.recordedByName, b.recordedById, to_date(b.createDate,'yyyy-MM-dd HH24:MI:SS')
+					)
+	</update>
+	
+	<!-- 	환자등록번호 스펠링주의 	   		-->
+	<!--	request - patientNumber 	-->
+	<!-- 	respone - patientId > patinetId -->
+	<!-- 파티션절에 세부내역 추가 lf.createDate -->
+	<update id="insertTemperature" parameterType="Map">
+	MERGE INTO 생활치료체온 a
+					USING (
+						   WITH life_info AS
+					        (
+							select rownum r, b1.* from
+														(
+														<foreach item="item" index="index" collection="lists" open="" separator="UNION ALL" close="">
+															SELECT 
+																#{item.patinetId} as patinetId,
+																#{item.patientName} as patientName,
+																#{item.patientPhone} as patientPhone,
+																to_char(to_date(#{item.birthDate},'yyyy-MM-dd'), 'yyyy-mm-dd') as birthDate,
+																#{item.temperature} as temperature, 
+																#{item.recordedByName} as recordedByName, 
+																#{item.recordedById} as recordedById, 
+																to_char(to_date(#{item.recodedDate},'yyyy-MM-dd HH24:MI:SS'), 'yyyy-mm-dd HH24:MI:SS') as recodedDate, 
+																to_char(to_date(#{item.createDate},'yyyy-MM-dd HH24:MI:SS'), 'yyyy-MM-dd HH24:MI:SS') as createDate
+															FROM DUAL
+														</foreach>
+														) b1
+							)
+							select * from(
+											select rank() over( partition by lf.patientName,lf.createDate order by r desc ) ran, 
+										       lf.patinetId,
+										       lf.patientName,
+										       lf.patientPhone,
+										       lf.birthDate,
+										       lf.temperature,
+										       lf.recordedByName,
+										       lf.recordedById,
+										       lf.recodedDate,
+										       lf.createDate
+											 from life_info lf
+										)
+							       where ran=1
+						) b
+					<![CDATA[	
+						ON (a.환자이름 = b.patientName and a.생년월일 = to_date(b.birthDate,'yyyy-MM-dd') and a.환자전화번호= b.patientPhone 
+						and a.생성시간 = to_date(b.createDate,'yyyy-MM-dd HH24:MI:SS')
+						)									
+					]]>
+				WHEN MATCHED THEN
+				UPDATE SET
+					a.환자등록번호 = b.patinetId,
+					a.체온 = b.temperature, 
+					a.입력자 = b.recordedByName,
+					a.입력자ID = b.recordedById, 
+					a.입력시간 = to_date(b.recodedDate,'yyyy-MM-dd HH24:MI:SS')
+				WHEN NOT MATCHED THEN 
+					INSERT (  
+					a.환자등록번호, a.환자이름, a.환자전화번호, a.생년월일, a.체온, a.입력자,
+					a.입력자ID, a.입력시간, a.생성시간
+					) VALUES ( 
+					b.patinetId, b.patientName, b.patientPhone, to_date(b.birthDate,'yyyy-MM-dd'), b.temperature, b.recordedByName,
+					b.recordedById, to_date(b.recodedDate,'yyyy-MM-dd HH24:MI:SS'), to_date(b.createDate,'yyyy-MM-dd HH24:MI:SS')
+					)
+	</update>
+	
+	<!-- 	환자등록번호 스펠링주의 	   		-->
+	<!--	request - patientNumber 	-->
+	<!-- 	respone - patientId > patinetId -->
+	<!-- 파티션절에 세부내역 추가 lf.createDate -->
+	<update id="insertBloodPressure" parameterType="Map">
+	MERGE INTO 생활치료혈압 a
+					USING (
+						   WITH life_info AS
+					        (
+							select rownum r, b1.* from
+														(
+														<foreach item="item" index="index" collection="lists" open="" separator="UNION ALL" close="">
+															SELECT 
+																#{item.patinetId} as patinetId,
+																#{item.patientName} as patientName,
+																#{item.patientPhone} as patientPhone,
+																to_char(to_date(#{item.birthDate},'yyyy-MM-dd'), 'yyyy-mm-dd') as birthDate,
+																#{item.bloodSbp} as bloodSbp, 
+																#{item.bloodDbp} as bloodDbp, 
+																#{item.recordedByName} as recordedByName, 
+																#{item.recordedById} as recordedById, 
+																to_char(to_date(#{item.recodedDate},'yyyy-MM-dd HH24:MI:SS'), 'yyyy-mm-dd HH24:MI:SS') as recodedDate, 
+																to_char(to_date(#{item.createDate},'yyyy-MM-dd HH24:MI:SS'), 'yyyy-MM-dd HH24:MI:SS') as createDate
+															FROM DUAL
+														</foreach>
+														) b1
+							)
+							select * from(
+											select rank() over( partition by lf.patientName,lf.createDate order by r desc ) ran, 
+										       lf.patinetId,
+										       lf.patientName,
+										       lf.patientPhone,
+										       lf.birthDate,
+										       lf.bloodSbp,
+										       lf.bloodDbp,
+										       lf.recordedByName,
+										       lf.recordedById,
+										       lf.recodedDate,
+										       lf.createDate
+											 from life_info lf
+										)
+							       where ran=1
+						) b
+					<![CDATA[	
+						ON (a.환자이름 = b.patientName and a.생년월일 = to_date(b.birthDate,'yyyy-MM-dd') and a.환자전화번호= b.patientPhone 
+						and a.생성시간 = to_date(b.createDate,'yyyy-MM-dd HH24:MI:SS')
+						)									
+					]]>
+				WHEN MATCHED THEN
+				UPDATE SET
+					a.환자등록번호 = b.patinetId,
+					a.수축기 = b.bloodSbp, 
+					a.이완기 = b.bloodDbp,
+					a.입력자 = b.recordedByName, 
+					a.입력자ID = b.recordedById, 
+					a.입력시간 = to_date(b.recodedDate,'yyyy-MM-dd HH24:MI:SS')
+				WHEN NOT MATCHED THEN 
+					INSERT (  
+					a.환자등록번호, a.환자이름, a.환자전화번호, a.생년월일, a.수축기, a.이완기,
+					a.입력자, a.입력자ID, a.입력시간, a.생성시간
+					) VALUES ( 
+					b.patinetId, b.patientName, b.patientPhone, to_date(b.birthDate,'yyyy-MM-dd'), b.bloodSbp, b.bloodDbp,
+					b.recordedByName, b.recordedById, to_date(b.recodedDate,'yyyy-MM-dd HH24:MI:SS'), to_date(b.createDate,'yyyy-MM-dd HH24:MI:SS')
+					)
+	</update>
+	
+	<!-- 	환자등록번호 스펠링주의 	   		-->
+	<!--	request - patientNumber 	-->
+	<!-- 	respone - patientId > patinetId -->
+	<!-- 파티션절에 세부내역 추가 lf.createDate -->
+	<update id="insertBloodSugar" parameterType="Map">
+	MERGE INTO 생활치료혈당 a
+					USING (
+						   WITH life_info AS
+					        (
+							select rownum r, b1.* from
+														(
+														<foreach item="item" index="index" collection="lists" open="" separator="UNION ALL" close="">
+															SELECT 
+																#{item.patinetId} as patinetId,
+																#{item.patientName} as patientName,
+																#{item.patientPhone} as patientPhone,
+																to_char(to_date(#{item.birthDate},'yyyy-MM-dd'), 'yyyy-MM-dd') as birthDate,
+																#{item.bloodSugar} as bloodSugar, 
+																#{item.recordedByName} as recordedByName, 
+																#{item.recordedById} as recordedById, 
+																to_char(to_date(#{item.recodedDate},'yyyy-MM-dd HH24:MI:SS'), 'yyyy-MM-dd HH24:MI:SS') as recodedDate, 
+																to_char(to_date(#{item.createDate},'yyyy-MM-dd HH24:MI:SS'), 'yyyy-MM-dd HH24:MI:SS') as createDate
+															FROM DUAL
+														</foreach>
+														) b1
+							)
+							select * from(
+											select rank() over( partition by lf.patientName,lf.createDate order by r desc ) ran, 
+										       lf.patinetId,
+										       lf.patientName,
+										       lf.patientPhone,
+										       lf.birthDate,
+										       lf.bloodSugar,
+										       lf.recordedByName,
+										       lf.recordedById,
+										       lf.recodedDate,
+										       lf.createDate
+											 from life_info lf
+										)
+							       where ran=1
+						) b
+					<![CDATA[	
+						ON (a.환자이름 = b.patientName and a.생년월일 = to_date(b.birthDate,'yyyy-MM-dd') and a.환자전화번호= b.patientPhone
+						and a.생성시간 = to_date(b.createDate,'yyyy-MM-dd HH24:MI:SS')
+						)									
+					]]>
+				WHEN MATCHED THEN
+				UPDATE SET
+					a.환자등록번호 = b.patinetId,
+					a.혈당 = b.bloodSugar, 
+					a.입력자 = b.recordedByName, 
+					a.입력자ID = b.recordedById, 
+					a.입력시간 = to_date(b.recodedDate,'yyyy-MM-dd HH24:MI:SS')
+				WHEN NOT MATCHED THEN 
+					INSERT (  
+					a.환자등록번호, a.환자이름, a.환자전화번호, a.생년월일, a.혈당, a.입력자,
+					a.입력자ID, a.입력시간, a.생성시간
+					) VALUES ( 
+					b.patinetId, b.patientName, b.patientPhone, to_date(b.birthDate,'yyyy-MM-dd'), b.bloodSugar, b.recordedByName,
+					b.recordedById, to_date(b.recodedDate,'yyyy-MM-dd HH24:MI:SS'), to_date(b.createDate,'yyyy-MM-dd HH24:MI:SS')
+					)
+	</update>
+	
+	<!-- 	환자등록번호 스펠링주의 	   		-->
+	<!--	request - patientNumber 	-->
+	<!-- 	respone - patientId > patinetId -->
+	<!-- 파티션절에 세부내역 추가 lf.createDate -->
+	<update id="insertOxygenSaturation" parameterType="Map">
+	MERGE INTO 생활치료산소포화도 a
+					USING (
+						   WITH life_info AS
+					        (
+							select rownum r, b1.* from
+														(
+														<foreach item="item" index="index" collection="lists" open="" separator="UNION ALL" close="">
+															SELECT 
+																#{item.patinetId} as patinetId,
+																#{item.patientName} as patientName,
+																#{item.patientPhone} as patientPhone,
+																to_char(to_date(#{item.birthDate},'yyyy-MM-dd'), 'yyyy-MM-dd') as birthDate,
+																#{item.oxygenSaturation} as oxygenSaturation, 
+																#{item.recordedByName} as recordedByName, 
+																#{item.recordedById} as recordedById, 
+																to_char(to_date(#{item.recodedDate},'yyyy-MM-dd HH24:MI:SS'), 'yyyy-MM-dd HH24:MI:SS') as recodedDate, 
+																to_char(to_date(#{item.createDate},'yyyy-MM-dd HH24:MI:SS'), 'yyyy-MM-dd HH24:MI:SS') as createDate
+															FROM DUAL
+														</foreach>
+														) b1
+							)
+							select * from(
+											select rank() over( partition by lf.patientName,lf.createDate order by r desc ) ran, 
+										       lf.patinetId,
+										       lf.patientName,
+										       lf.patientPhone,
+										       lf.birthDate,
+										       lf.oxygenSaturation,
+										       lf.recordedByName,
+										       lf.recordedById,
+										       lf.recodedDate,
+										       lf.createDate
+											 from life_info lf
+										)
+							       where ran=1
+						) b
+					<![CDATA[	
+						ON (a.환자이름 = b.patientName and a.생년월일 = to_date(b.birthDate,'yyyy-MM-dd') and a.환자전화번호= b.patientPhone 
+						and a.생성시간 = to_date(b.createDate,'yyyy-MM-dd HH24:MI:SS')
+						)									
+					]]>
+				WHEN MATCHED THEN
+				UPDATE SET
+					a.환자등록번호 = b.patinetId,
+					a.산소포화도 = b.oxygenSaturation, 
+					a.입력자 = b.recordedByName, 
+					a.입력자ID = b.recordedById, 
+					a.입력시간 = to_date(b.recodedDate,'yyyy-MM-dd HH24:MI:SS')
+				WHEN NOT MATCHED THEN 
+					INSERT (  
+					a.환자등록번호, a.환자이름, a.환자전화번호, a.생년월일, a.산소포화도, a.입력자,
+					a.입력자ID, a.입력시간, a.생성시간
+					) VALUES ( 
+					b.patinetId, b.patientName, b.patientPhone, to_date(b.birthDate,'yyyy-MM-dd'), b.oxygenSaturation, b.recordedByName,
+					b.recordedById, to_date(b.recodedDate,'yyyy-MM-dd HH24:MI:SS'), to_date(b.createDate,'yyyy-MM-dd HH24:MI:SS')
+					)
+	</update>
+	
+	<!-- 	환자등록번호 스펠링주의 	   		-->
+	<!--	request - patientNumber 	-->
+	<!-- 	respone - patientId > patinetId -->
+	<!-- 파티션절에 세부내역 추가 lf.createDate -->
+	<update id="insertPulseRate" parameterType="Map">
+	MERGE INTO 생활치료맥박수 a
+					USING (
+						   WITH life_info AS
+					        (
+							select rownum r, b1.* from
+														(
+														<foreach item="item" index="index" collection="lists" open="" separator="UNION ALL" close="">
+															SELECT 
+																#{item.patinetId} as patinetId,
+																#{item.patientName} as patientName,
+																#{item.patientPhone} as patientPhone,
+																to_char(to_date(#{item.birthDate},'yyyy-MM-dd'), 'yyyy-MM-dd') as birthDate,
+																#{item.pulseRate} as pulseRate,
+																#{item.recordedByName} as recordedByName, 
+																#{item.recordedById} as recordedById, 
+																to_char(to_date(#{item.recodedDate},'yyyy-MM-dd HH24:MI:SS'), 'yyyy-MM-dd HH24:MI:SS') as recodedDate, 
+																to_char(to_date(#{item.createDate},'yyyy-MM-dd HH24:MI:SS'), 'yyyy-MM-dd HH24:MI:SS') as createDate
+															FROM DUAL
+														</foreach>
+														) b1
+							)
+							select * from(
+											select rank() over( partition by lf.patientName,lf.createDate order by r desc ) ran, 
+										       lf.patinetId,
+										       lf.patientName,
+										       lf.patientPhone,
+										       lf.birthDate,
+										       lf.pulseRate,
+										       lf.recordedByName,
+										       lf.recordedById,
+										       lf.recodedDate,
+										       lf.createDate
+											 from life_info lf
+										)
+							       where ran=1
+						) b
+					<![CDATA[	
+						ON (a.환자이름 = b.patientName and a.생년월일 = to_date(b.birthDate,'yyyy-MM-dd') and a.환자전화번호= b.patientPhone
+						and a.생성시간 = to_date(b.createDate,'yyyy-MM-dd HH24:MI:SS')
+						)									
+					]]>
+				WHEN MATCHED THEN
+				UPDATE SET
+					a.환자등록번호 = b.patinetId,
+					a.맥박수 = b.pulseRate, 
+					a.입력자 = b.recordedByName, 
+					a.입력자ID = b.recordedById, 
+					a.입력시간 = to_date(b.recodedDate,'yyyy-MM-dd HH24:MI:SS')
+				WHEN NOT MATCHED THEN 
+					INSERT (  
+					a.환자등록번호, a.환자이름, a.환자전화번호, a.생년월일, a.맥박수, a.입력자,
+					a.입력자ID, a.입력시간, a.생성시간
+					) VALUES ( 
+					b.patinetId, b.patientName, b.patientPhone, to_date(b.birthDate,'yyyy-MM-dd'), b.pulseRate, b.recordedByName,
+					b.recordedById, to_date(b.recodedDate,'yyyy-MM-dd HH24:MI:SS'), to_date(b.createDate,'yyyy-MM-dd HH24:MI:SS')
+					)
+	</update>
+	
+	<!-- 	환자등록번호 스펠링주의 	   		-->
+	<!--	request - patientNumber 	-->
+	<!-- 	respone - patientId > patinetId -->
+	<!-- 파티션절에 세부내역 추가 lf.createDate -->
+	<update id="insertClinicMemo" parameterType="Map">
+	MERGE INTO 생활치료의료진메모 a
+					USING (
+						   WITH life_info AS
+					        (
+							select rownum r, b1.* from
+														(
+														<foreach item="item" index="index" collection="lists" open="" separator="UNION ALL" close="">
+															SELECT 
+																#{item.patinetId} as patinetId,
+																#{item.patientName} as patientName,
+																#{item.patientPhone} as patientPhone,
+																to_char(to_date(#{item.birthDate},'yyyy-MM-dd'), 'yyyy-MM-dd') as birthDate,
+																#{item.clinicMemo} as clinicMemo,
+																#{item.recordedByName} as recordedByName, 
+																#{item.recordedById} as recordedById, 
+																to_char(to_date(#{item.createDate},'yyyy-MM-dd HH24:MI:SS'), 'yyyy-MM-dd HH24:MI:SS') as createDate
+															FROM DUAL
+														</foreach>
+														) b1
+							)
+							select * from(
+											select rank() over( partition by lf.patientName,lf.createDate order by r desc ) ran, 
+										       lf.patinetId,
+										       lf.patientName,
+										       lf.patientPhone,
+										       lf.birthDate,
+										       lf.clinicMemo,
+										       lf.recordedByName,
+										       lf.recordedById,
+										       lf.createDate
+											 from life_info lf
+										)
+							       where ran=1
+						) b
+					<![CDATA[	
+						ON (a.환자이름 = b.patientName and a.생년월일 = to_date(b.birthDate,'yyyy-MM-dd') and a.환자전화번호= b.patientPhone
+						and a.생성시간 = to_date(b.createDate,'yyyy-MM-dd HH24:MI:SS')
+						)									
+					]]>
+				WHEN MATCHED THEN
+				UPDATE SET
+					a.환자등록번호 = b.patinetId,
+					a.의료진메모 = b.clinicMemo, 
+					a.입력자 = b.recordedByName, 
+					a.입력자ID = b.recordedById
+				WHEN NOT MATCHED THEN 
+					INSERT (  
+					a.환자등록번호, a.환자이름, a.환자전화번호, a.생년월일, a.의료진메모, a.입력자,
+					a.입력자ID, a.생성시간
+					) VALUES ( 
+					b.patinetId, b.patientName, b.patientPhone, to_date(b.birthDate,'yyyy-MM-dd'), b.clinicMemo, b.recordedByName,
+					b.recordedById, to_date(b.createDate,'yyyy-MM-dd HH24:MI:SS')
+					)
+	</update>
+	
+	<!-- 파람세팅 : 기준날짜, 기준날짜로 부터 이전 며칠(기준날짜 제외한 일수만 들어옴), 작업자ID -->
+	<select id="saveEmrData" statementType="CALLABLE" parameterType="Map">
+		<![CDATA[
+			{call covid19ToEmr(#{vdate}, #{bdays}, #{vjid})}
+		]]>
+	</select>
+	
+</mapper>
