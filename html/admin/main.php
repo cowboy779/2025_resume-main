@@ -20,6 +20,12 @@
              ?>
         <hr />
 
+        <h4>UserAgent </h4>
+        <?php
+             echo "<a href=\"useragent/index.html\">[UserAgent TEST]</a>";
+             ?>
+        <hr />
+
         <h4>RESUME </h4>
         <?php
              echo "<a href=\"resume/view_md.php\">[RESUME]</a>";
