@@ -119,7 +119,6 @@ public class LifeCenterService extends EgovAbstractServiceImpl implements Servic
 
 		String param = managerId + "|" + careAgencyCode + "|" + getNow();
 		String token = aesEncrypt(encKey, IV, param); // 토큰 생성 및 암호화---
-		System.out.println("★토큰출력 : "+ token);
 		
 		JSONObject jObject = new JSONObject();
 
@@ -156,7 +155,7 @@ public class LifeCenterService extends EgovAbstractServiceImpl implements Servic
 //		JSONParser jsonParse = new JSONParser();
 //	    JSONArray jarr = new JSONArray();
 //	    jarr = (JSONArray) jsonParse.parse(result);
-//		System.out.println(jarr);
+
 //		for (int i = 0; i < jarr.size(); i++) {
 //			mResultData.addRow(getMapFromJsonObject((JSONObject) jsonParse.parse(jarr.get(i).toString())));
 //		}
@@ -166,12 +165,8 @@ public class LifeCenterService extends EgovAbstractServiceImpl implements Servic
 		DateFormat df = new SimpleDateFormat("yyyyMMdd");
 
 		for(int day=0; day<=rstDiff; day++) {
-			System.out.println("rstDiff: " + rstDiff);
-			System.out.println("number: " + day);
 		    cal.setTime(df.parse(startDate));
-		    //System.out.println("current: " + df.format(cal.getTime()));
 		    cal.add(Calendar.DATE, day);
-		    //System.out.println("after: " + df.format(cal.getTime()));
 		       
 		    jObject.replace("startDate", df.format(cal.getTime()));
 		    jObject.replace("endDate", df.format(cal.getTime()));
@@ -182,8 +177,6 @@ public class LifeCenterService extends EgovAbstractServiceImpl implements Servic
 		    
 		    jarr.add((JSONArray) jsonParse.parse(result));
 		}
-		System.out.println(jarr);
-		System.out.println(jarr.size());
 		*/
 		return mResultData;
 	}
@@ -205,7 +198,6 @@ public class LifeCenterService extends EgovAbstractServiceImpl implements Servic
 
 		try {
 			sendList.add(sendURL);
-			//System.out.println(sendList.get(0));
 			// StringBuilder urlBuilder = new StringBuilder(sendURL);
 			// URL url = new URL(urlBuilder.toString());
 			URL url = new URL(sendList.get(0));
@@ -387,11 +379,9 @@ public class LifeCenterService extends EgovAbstractServiceImpl implements Servic
 		//0이상: 수동버튼클릭시에만 반응(건수가 찍혀서 출력)
 		int cnt = 0;
 		if (resourceType.equals("allDown")) {
-			System.out.println(resourceType);
 			isertAllTot(sendURL, jObject);
 			cnt = -1;
 		} else if (resourceType.equals("allDownStop")) {
-			System.out.println(resourceType);
 			isertAllTotStop(jObject);
 			cnt = 0;
 		} else { // 전체이면
@@ -399,12 +389,8 @@ public class LifeCenterService extends EgovAbstractServiceImpl implements Servic
 			DateFormat df = new SimpleDateFormat("yyyyMMdd");
 	
 			for(int day=0; day<=rstDiff; day++) {
-				System.out.println("rstDiff: " + rstDiff);
-				System.out.println("number: " + day);
 			    cal.setTime(df.parse(startDate));
-			    //System.out.println("current: " + df.format(cal.getTime()));
 			    cal.add(Calendar.DATE, day);
-			    //System.out.println("after: " + df.format(cal.getTime()));
 			       
 			    jObject.replace("startDate", df.format(cal.getTime()));
 			    jObject.replace("endDate", df.format(cal.getTime()));
@@ -456,11 +442,8 @@ public class LifeCenterService extends EgovAbstractServiceImpl implements Servic
 			list.add(getMapFromJsonObject((JSONObject) jsonParse.parse(jarr.get(i).toString())));
 		}
 	
-		System.out.println("List 사이즈 찎고 :"+list.size());
 		if(list.size() > 0) {
 			map.put("lists",list);
-			//System.out.println("MAP 찎고 :"+map);
-			//System.out.println("조건문 찍고  :"+resourceType);
 			
 			//리스폰시 환자정보 patientInfo'List' 들어와서 변경
 			if (resourceType.equals("patientInfo")) {
@@ -547,8 +530,6 @@ public class LifeCenterService extends EgovAbstractServiceImpl implements Servic
 		int cnt = 0;
 		if(mParamAsList.size() > 0) {
 			map.put("lists", mParamAsList);
-			//System.out.println("MAP 찎고 :"+map);
-			//System.out.println("조건문 찍고  :"+resourceType);
 			
 			//리스폰시 환자정보 patientInfo'List' 들어와서 변경
 			if (resourceType.equals("patientInfo")) {
@@ -667,9 +648,6 @@ public class LifeCenterService extends EgovAbstractServiceImpl implements Servic
 	 * */
 	private void isertAllTotStop(JSONObject jObject) {
 		task.cancel();
-		
-		System.out.println("Timer end ---");
-		System.out.println((long) jObject.get("timer"));
 	}
 	
 
