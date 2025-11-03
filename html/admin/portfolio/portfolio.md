@@ -124,6 +124,18 @@ python /company/account_system/script/job_autoproc.py
 
 ---
 
+## Project [4]
+### 신규 디자인 필요, SQL 쿼리의 중앙집중화, 제이쿼리정리, 공통환자모듈 필요
+###### - **배경:** 공공의료 종사자 편의성과 관리 및 환자 개인정보 권한 강화,데이터 통합솔루션으로 기획
+- JSP 소스 Websquare5 UI로 디자인변경 및 oracle sql 동적 mybatis 추가하여 SQL 성능 향상 및 확장성으로 수정
+- API 통한 생활(재택)치료센터 연계 데이터 배치작업 `private int semiInsertData`(**[소스보기](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/medios/LifeCenterService.java)**)
+- JSP m2 소스 > 표준화된 Websquare에 맞게 전환 및 이식작업 (**[이미지보기](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/medios/sugacode_img.png)**)
+- 전반적으로 안전하고 빠르게 소스를 신규포멧에 맞게 전환하는거에 초점
+- 양이 많다보니 SQL은 추후에 튜닝이나 개발표준화을 기준으로 새롭게 만들었다.
+
+
+---
+
 ## improvement [0]
 ### 텔렘그램 및 SMTP 중복 방지 및 많은 양의 알림 전송 최적화
 - 비동기 처리 및 재시도 메커니즘 구현으로 안정성 향상
@@ -249,7 +261,6 @@ server_tokens off; --추가
 
 ---
 
-<!-- _class: section -->
 ## 기술지원 Infra DevOPS [0]
  - 특정 port 허용 및 원외에서 들어오는 외부 방화벽 관리
  - 테스트 개발 VM 생성 및 Linux firewalld 사용하여 특정 IP allow, port 추가 작업
@@ -354,7 +365,7 @@ static public function saveErrFile($message, $type) {
         $date = date("Ymd", time());
         $fileName = "{$type}_{$date}.err";
         file_put_contents(Config::LOG_PATH . $fileName, $message . "\n", FILE_APPEND);
-    }
+}
 ```
 ```ruby
 <source> #fluentd.conf
@@ -378,6 +389,32 @@ static public function saveErrFile($message, $type) {
  - service set 사용자정의 프로토콜 등록처리
 
 `위 해당 관리책임장은 팀장님이 정, 저는 부의 역할로 지정된 정책만 진행하였습니다.`
+
+---
+
+## ETC [0] - 현재 개선혹은 작업중에 관심있거나 보완할 사항
+  - FCM을 통해 각 디바이스별 `Notification` 를 보내는데 추후 **[iOS APNs](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)** 를 통해 프로젝트별로 토큰을 발급받아 재구성이 필요(`Apns`의 안정성과 디바이스별 고유관리)
+  - Python flask 기본적인 route가 복잡해질시 flask-admin, blueprint 통해 get/post를 RESTful 하게 HTTP 메서드의 역할을 유지보수성을 위해 명확한 구분이 필요로하다.
+  - 정보보안이 강해지면서 CSRF 방어를 모든곳에 넣을 수 없기에 특정영역에 국한되었지만, JWT와 API와 다르게 운영툴 탈취도 심각하기에 전방위에 `Token` 발급/검증 필요
+
+---
+
+## ETC [1]
+- DB 커넥션같은 경우 매번 열어두지않고 DB I/O 효율화와 리소스 누수 방지로 요청 단위 커넥션을 재사용 함으로써 보완하였다. (**[소스원문](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/dbhelper/dbhelper.py)**)
+```python
+def _get_connection():  
+    if not g.get('db_conn'):
+        g.db_conn = RDB.CreateConnection()
+    return g.db_conn
+def _QueryWithFetchAll(query, args=None):
+    return RDB.QueryWithFetchAll(_get_connection(), query, args)
+```
+```python
+@app.after_request
+def after_request(response):
+    close_connection()
+    return response
+```
 
 ---
 
