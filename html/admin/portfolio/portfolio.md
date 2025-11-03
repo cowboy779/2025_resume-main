@@ -98,17 +98,17 @@ return makeResponse(CouponResult::OK, $coupons);
 ## Project [2]-2  
 - **[LDAP LIST](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/ldap_login/internal.py)** : NAS LDAP 사용자 계정 리스트 조회 및 관리툴 개발
 - 공통 그룹웨어가 아닌 내부에서 사용하기 위해, 사원 입퇴사 관리 조직 그룹망을 구현하기 위해 자동 batch > [batch script 보기](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/ldap_login/python_auto_shell/job_autoproc.py)
-```
+```sh
 ##### run_account.sh crontab 설정 예시
 # 매주 월~금 09:30 ~ 19:30 매 시간 30분마다 실행
-0,30 9-19 * * 1-5 /ltcon/account_site/run_account.sh
+0,30 9-19 * * 1-5 /company/account_site/run_account.sh
 
 ##### run_account.sh
 #!/bin/bash
 # 가상 환경 활성화
-source /ltcon/venv/account_system/bin/activate
+source /company/venv/account_system/bin/activate
 # Python 스케쥴링 스크립트 실행
-python /ltcon/account_system/script/job_autoproc.py
+python /company/account_system/script/job_autoproc.py
 
 ```
 
@@ -132,7 +132,7 @@ python /ltcon/account_system/script/job_autoproc.py
   대량의 알림이 발생할 경우, 중복 전송 및 지연 문제 해결을 위해 Lock 과 서브프로세스 Task로 비동기로 개선해 보았습니다.
   
 flock으로 동시실행 방지 및 뮤텍스
-```
+```php
 if ((trim(file_get_contents("/proc/".posix_getppid()."/comm")) != 'flock')
         && (int)exec("pgrep -c -f '".basename(__FILE__)."'") > 1)
 {
@@ -182,13 +182,13 @@ if ((trim(file_get_contents("/proc/".posix_getppid()."/comm")) != 'flock')
 - 온라인 샵 구매 및 월렛 이용 후 토큰교환시  
 
 X-Frame-Options
-```
+```nginx
 Nginx
 add_header Content-Security-Policy "default-src 'self'; frame-ancestors 'self';" always;
 add_header X-Frame-Options "DENY" always;
 ```
 Response header에 보안 옵션 추가
-```
+```php
 PHP
 header("Content-Security-Policy: frame-ancestors 'self' https://www.riseofstars.io;");
 header("X-Frame-Options: SAMEORIGIN");
@@ -212,7 +212,7 @@ $bind = [":couponId" => $couponID];
 $couponData = SQLDBWrapper::GetSQLDB()->select(DBTable::COUPON_DATA, $where, $bind);
 ```
  - 응답헤더 버전 정보 노출 숨김처리
-```
+```ini
 php
 [root@localhost ~]# vim /etc/php.ini 
 ;expose_php = On
@@ -253,8 +253,12 @@ server_tokens off; --추가
 ## 기술지원 Infra DevOPS [0]
  - 특정 port 허용 및 원외에서 들어오는 외부 방화벽 관리
  - 테스트 개발 VM 생성 및 Linux firewalld 사용하여 특정 IP allow, port 추가 작업
- - Login 유저 생성 및 SSH Shell 권한 부여 작업 
+```bash
+$firewall-cmd --zone=public-office --add-forward-port=port=22000:proto=tcp:toport=22:toaddr=192.168.0.1 --permanent
+$firewall-cmd --reload
 ```
+ - Login 유저 생성 및 SSH Shell 권한 부여 작업 
+```bash
 useradd test123
 mkdir -p /home/test123/.ssh
 vi /home/test123/.ssh/authorized_keys
@@ -266,8 +270,8 @@ ps -ef
 <!-- _class: section -->
 ## 기술지원 Infra DevOps [1]
  - 트러블 슈팅 에러로그 관리
- - VM 용량 증가 및 swap 관리
-```
+ - Oracle VM 용량 증가 및 swap 관리
+```bash
 1. vm 용량 조정
 2. df-h 디스크 용량 확인
 3. growpart /dev/sda 3
@@ -281,19 +285,19 @@ ps -ef
 
 ## 기술지원 Infra DevOps [2]
  - Jenkins Execute shell 통해 자동배포 및 빌드관리 이용하였습니다.
-```
+```bash
 rm -rf _syncspace
 rsync -r ./*.wsgi admin api lib ./_syncspace --exclude=.svn
 mkdir ./_syncspace/config
 cp ./config/config.py.test ./_syncspace/config/config.py
 rsync -r --rsync-path="sudo rsync" ./_syncspace/ ${TARGET_HOST}:${TARGET_DIR}
 
-ssh ${TARGET_HOST} 'sudo touch /cowboy779/uwsgi.d/_admin.ini'
-ssh ${TARGET_HOST} 'sudo touch /cowboy779/uwsgi.d/_api.ini'
+ssh ${TARGET_HOST} 'sudo touch /company/uwsgi.d/_admin.ini'
+ssh ${TARGET_HOST} 'sudo touch /company/uwsgi.d/_api.ini'
 ```
  - SVN/GIT 소스 운영관리 및 권한 관리용 웹페이지 이식 및 빌드배포
  - Gitea 설치형 WEB Gitea 구축
- - SVN Tortoise 에서 개발계정 소스 운영관리 및 권한 관리용 **[iF.SVNAdmin](https://svnadmin.insanefactory.com)** 이식 및 빌드배포 하였습니다 > **[SVNAdmin 소스보기](https://github.com/cowboy779/2025_resume-main/tree/main/html/admin/svnadmin)**
+ - SVN Tortoise 에서 개발계정 소스 운영관리 및 권한 관리용 **[iF.SVNAdmin](https://svnadmin.insanefactory.com)** 이식 및 빌드배포 하였습니다 > **[SVNAdmin 소스보기](https://github.com/cowboy779/2025_resume-main/tree/main/html/admin/svn/svnadmin)**
 
 
 ---
@@ -301,7 +305,7 @@ ssh ${TARGET_HOST} 'sudo touch /cowboy779/uwsgi.d/_api.ini'
 ## 기술지원 Infra DevOps [3]
 - Nginx 리버스 프록시 관리 및 다수의 VM 포워딩 연결관리
 - Nginx websocket 연결추가
-```
+```nginx
 nginx
 server {
     listen   8080 ssl default_server;
@@ -321,13 +325,13 @@ server {
 ---
 ## 기술지원 Infra DevOps [4]
 - Mysql dump 백업관리 쉘을 통해 특정 로그 및 파일들 이중화
-```
+```sh
 db_backup.sh
 ssh localhost "mysqldump -u testdump -p dumptable > _backup.sql"
 scp 127.0.0.1:~/_backup.sql ./
 mysql -h test.com -u testdump -p testdump < _backup.sql
 ```
-```
+```ini
 # vim /etc/my.cnf
 log-bin = mysql-bin
 server-id = 1
@@ -336,7 +340,7 @@ expire_logs_days = 2
 # slave
 server-id = 2
 ```
-```
+```sql
 `mySQL 8.0.23 이상` CHANGE REPLICATION SOURCE TO MASTER_HOST=...
 GET_SOURCE_PUBLIC_KEY=1;(caching_sha2_password 오류 방지)
 ```
@@ -352,7 +356,7 @@ static public function saveErrFile($message, $type) {
         file_put_contents(Config::LOG_PATH . $fileName, $message . "\n", FILE_APPEND);
     }
 ```
-```
+```ruby
 <source> #fluentd.conf
   @type tail
   path /cowboy779/log/error/*_%Y%m%d.err
