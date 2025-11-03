@@ -228,7 +228,7 @@ server_tokens off; --추가
 ## security aspect [3]
   - XSS 방어 (출력시 HTML 특수문자 이스케이프)
   ```php
-  function escapeHtml($string) {
+  function escapeHtml($string) { # 예) 문자열로 표시하여 스크립트 실행방지
       return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
   }
   ```
@@ -252,7 +252,7 @@ server_tokens off; --추가
 <!-- _class: section -->
 ## 기술지원 Infra DevOPS [0]
  - 특정 port 허용 및 원외에서 들어오는 외부 방화벽 관리
- - 테스트 개발 VM 생성 및 특정 IP allow 작업
+ - 테스트 개발 VM 생성 및 Linux firewalld 사용하여 특정 IP allow, port 추가 작업
  - Login 유저 생성 및 SSH Shell 권한 부여 작업 
 ```
 useradd test123
@@ -293,7 +293,7 @@ ssh ${TARGET_HOST} 'sudo touch /cowboy779/uwsgi.d/_api.ini'
 ```
  - SVN/GIT 소스 운영관리 및 권한 관리용 웹페이지 이식 및 빌드배포
  - Gitea 설치형 WEB Gitea 구축
- - SVN Tortoise 에서 개발계정 소스 운영관리 및 권한 관리용 **[iF.SVNAdmin](https://svnadmin.insanefactory.com)** 이식 및 빌드배포
+ - SVN Tortoise 에서 개발계정 소스 운영관리 및 권한 관리용 **[iF.SVNAdmin](https://svnadmin.insanefactory.com)** 이식 및 빌드배포 하였습니다 > **[SVNAdmin 소스보기](https://github.com/cowboy779/2025_resume-main/tree/main/html/admin/svnadmin)**
 
 
 ---
