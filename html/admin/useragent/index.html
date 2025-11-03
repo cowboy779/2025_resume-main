@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>UserAgent 테스트</title>
+  <style>
+    body {
+      font-family: Consolas, monospace;
+      background: #1e1e1e;
+      color: #dcdcdc;
+      padding: 30px;
+    }
+    h1 {
+      color: #98c379;
+    }
+    #ua {
+      margin-top: 20px;
+      padding: 15px;
+      background: #2c2c2c;
+      border-radius: 8px;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <h1>UserAgent 테스트 페이지</h1>
+  <p>현재 브라우저의 UserAgent 정보:</p>
+  <div id="ua"></div>
+
+  <script>
+    console.log(window.navigator.userAgent);
+    document.getElementById("ua").textContent = navigator.userAgent;
+  </script>
+</body>
+</html>

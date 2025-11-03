@@ -122,10 +122,7 @@ python /ltcon/account_system/script/job_autoproc.py
   Telegram API Bot 기반 및 SMTP 프로토콜을 사용한 메일 알림 라이브러리  
 - 관리자 알림툴에서 `email, telegram, all` 선택적으로 알림 전송 가능을 구현하였습니다.
 
-
-
 ---
-
 
 ## improvement [0]
 ### 텔렘그램 및 SMTP 중복 방지 및 많은 양의 알림 전송 최적화
@@ -155,8 +152,6 @@ if ((trim(file_get_contents("/proc/".posix_getppid()."/comm")) != 'flock')
 - OAuth 2.0 클라이언트 ID 를 부여함으로써 각 운영툴마다 액세스 분리처리하여 한곳에서 키를 받을 수있게 관리가 용이해졌습니다.
 
 
-
-
 ---
 <!-- _class: img-small-right -->
 ## improvement [2]
@@ -177,7 +172,6 @@ if ((trim(file_get_contents("/proc/".posix_getppid()."/comm")) != 'flock')
  - **[운영정책](https://docs.lightcon.net/policy/ko.html?date=20221104&idx=2#tab2)** : 기존 JS document.write() 형식으로 TEXT AREA 에서 정책을 수정 타이핑 작업하는걸 좀 더 가시성이 좋게 [summernote](https://summernote.org/) > WYSIWYG 도입하여 작업효율 개선
  - 그외 파일 생성하여 정책 수정/저장 하는걸 DB로 이관하여 인덱스 관리화로 개선해서 실제 운영팀에서 다량의 텍스트를 등록 현업에서 빠르게 처리할 수 있게 수정하였습니다.
 (속도 및 잦은 정책변화로 인한 버전관리 용이해짐)
-
 
 
 ---
@@ -209,9 +203,49 @@ header("X-Frame-Options: SAMEORIGIN");
 
 ---
 
-<!-- _class: section -->
 ## security aspect [2]
+### ISO 대응 각종 취약점 미비된 환경 방어
+ - SQL 인젝션 파라미터 URL 호출 및 방어(SQL Prepared)
+```php
+$where = "COUPONID=:couponId";
+$bind = [":couponId" => $couponID];
+$couponData = SQLDBWrapper::GetSQLDB()->select(DBTable::COUPON_DATA, $where, $bind);
+```
+ - 응답헤더 버전 정보 노출 숨김처리
+```
+php
+[root@localhost ~]# vim /etc/php.ini 
+;expose_php = On
+expose_php = Off
+nginx 
+[root@localhost ~]# vim /etc/nginx/nginx.conf
+### version hide
+server_tokens off; --추가
+```
 
+---
+
+## security aspect [3]
+  - XSS 방어 (출력시 HTML 특수문자 이스케이프)
+  ```php
+  function escapeHtml($string) {
+      return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+  }
+  ```
+  - 세션 하이재킹 방어 (세션 고정 방지 및 쿠키 보안 설정) 통해 보안강화 하였습니다.
+  ```python
+  app.secret_key = 'xxx'  
+  # -- 서버 사이드 세션 (cachelib 사용 예시) --
+  app.config['SESSION_TYPE'] = 'cachelib' # 또는 'filesystem' 등 (라이브러리/버전에 따라 다름)
+  app.config['SESSION_CACHELIB'] = FileSystemCache(cache_dir='/var/lib/flask_session') # MemcachedCache 이용
+  app.config['SESSION_PERMANENT'] = True
+  app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30) # 세션 사용시간 제한
+
+  # -- 쿠키 보안 옵션 --
+  app.config['SESSION_COOKIE_HTTPONLY'] = True   # JS에서 document.cookie로 접근 차단
+  app.config['SESSION_COOKIE_SECURE'] = True     # https 전용 (운영환경에서만 True)
+  app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # 또는 'Strict' (CSRF GET이냐, same-site 요청만 허용이냐에 따라 다름)
+  ```
 
 ---
 
@@ -243,33 +277,30 @@ ps -ef
 7. lsblk
 ```
 
-
 ---
 
 ## 기술지원 Infra DevOps [2]
-### ISO 대응 각종 취약점 미비된 환경 방어
- - SQL 인젝션 파라미터 URL 호출 및 방어(SQL Prepared)
-```php
-$where = "COUPONID=:couponId";
-$bind = [":couponId" => $couponID];
-$couponData = SQLDBWrapper::GetSQLDB()->select(DBTable::COUPON_DATA, $where, $bind);
+ - Jenkins Execute shell 통해 자동배포 및 빌드관리 이용하였습니다.
 ```
- - 응답헤더 버전 정보 노출 숨김처리
+rm -rf _syncspace
+rsync -r ./*.wsgi admin api lib ./_syncspace --exclude=.svn
+mkdir ./_syncspace/config
+cp ./config/config.py.test ./_syncspace/config/config.py
+rsync -r --rsync-path="sudo rsync" ./_syncspace/ ${TARGET_HOST}:${TARGET_DIR}
+
+ssh ${TARGET_HOST} 'sudo touch /cowboy779/uwsgi.d/_admin.ini'
+ssh ${TARGET_HOST} 'sudo touch /cowboy779/uwsgi.d/_api.ini'
 ```
-php
-[root@localhost ~]# vim /etc/php.ini 
-;expose_php = On
-expose_php = Off
-nginx 
-[root@localhost ~]# vim /etc/nginx/nginx.conf
-### version hide
-server_tokens off; --추가
-```
+ - SVN/GIT 소스 운영관리 및 권한 관리용 웹페이지 이식 및 빌드배포
+ - Gitea 설치형 WEB Gitea 구축
+ - SVN Tortoise 에서 개발계정 소스 운영관리 및 권한 관리용 **[iF.SVNAdmin](https://svnadmin.insanefactory.com)** 이식 및 빌드배포
+
 
 ---
+
 ## 기술지원 Infra DevOps [3]
-- Nginx 리버스 프록시 관리 및 포워딩 연결설정
-- Nginx websocket 연결설정
+- Nginx 리버스 프록시 관리 및 다수의 VM 포워딩 연결관리
+- Nginx websocket 연결추가
 ```
 nginx
 server {
@@ -289,14 +320,26 @@ server {
 
 ---
 ## 기술지원 Infra DevOps [4]
-- Mysql dump 백업관리 쉘을 통해 다른서버에 이중화
+- Mysql dump 백업관리 쉘을 통해 특정 로그 및 파일들 이중화
 ```
 db_backup.sh
 ssh localhost "mysqldump -u testdump -p dumptable > _backup.sql"
 scp 127.0.0.1:~/_backup.sql ./
 mysql -h test.com -u testdump -p testdump < _backup.sql
 ```
-
+```
+# vim /etc/my.cnf
+log-bin = mysql-bin
+server-id = 1
+binlog_format = row
+expire_logs_days = 2
+# slave
+server-id = 2
+```
+```
+`mySQL 8.0.23 이상` CHANGE REPLICATION SOURCE TO MASTER_HOST=...
+GET_SOURCE_PUBLIC_KEY=1;(caching_sha2_password 오류 방지)
+```
 
 ---
 
@@ -322,10 +365,15 @@ static public function saveErrFile($message, $type) {
 </source>
   ```
 
+---
 
+## 기술지원 Infra DevOps [6]
+ - Juniper 방화벽 관리 및 정책설정
+ - 특정 IP 대역 및 포트 허용/차단 관리  
+  Untrust, Trust zone 설정 및 정책 통해 초기 외부방화벽 설정
+ - service set 사용자정의 프로토콜 등록처리
 
-
-
+`위 해당 관리책임장은 팀장님이 정, 저는 부의 역할로 지정된 정책만 진행하였습니다.`
 
 ---
 
