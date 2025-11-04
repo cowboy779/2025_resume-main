@@ -31,7 +31,8 @@ function SendQueueProc() {
     }
 
     //$cpuCnt = substr_count(file_get_contents('/proc/cpuinfo'), 'processor'); // 프로세서 수 반환
-    $cpuCnt = 4; // 그냥, 4개로 고정하자
+    //$cpuCnt = 4;
+    $cpuCnt = (int)(trim(shell_exec('nproc')) * 1.5); // I/O가 많거나 DB API 호출 대기 시간
     for ($i = 0; $i < $cpuCnt; $i++) { // CPU 수 만큼 프로세스 실행
         if (count($datas) < 1) break;
         $data = array_shift($datas);
