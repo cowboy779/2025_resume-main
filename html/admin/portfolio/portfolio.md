@@ -53,7 +53,7 @@ style: |
 ---
 
 <!-- _backgroundImage: url('./images/bg_intro.jpg') -->
-## Project [0]  
+## Project [0]  ![game](https://img.shields.io/badge/game-2563EB?style=for-the-badge&labelColor=93C5FD) 
 #### 프로모션 쿠폰 발급 시스템 구축
 ###### - **배경:** 자사내 다른게임에서도 연동해서 쓸수 있게 서버요청시 쿠폰 발급 기능
 ###### - **기술 스택:** PHP, MySQL
@@ -77,7 +77,7 @@ return makeResponse(CouponResult::OK, $coupons);
 
 ---
 
-## Project [1]  
+## Project [1]  ![game](https://img.shields.io/badge/game-2563EB?style=for-the-badge&labelColor=93C5FD) 
 ### 라이트컨 웹 고객센터 FAQ 생성  
 ###### - **배경:** 구글 스토어 정책을 준수하며, 고객 개인정보 최소수집을 위한 이메일주소로만 페이지 구현  
 ###### - **기술 스택:** Python, flask, jinja2, MySQL  
@@ -87,17 +87,18 @@ return makeResponse(CouponResult::OK, $coupons);
 
 ---
 
-## Project [2]  
+## Project [2]  ![game](https://img.shields.io/badge/game-2563EB?style=for-the-badge&labelColor=93C5FD) 
 ![Account](../ldap_login/images/account_list.png)  
-### NAS LDAP 연동 및 전환 프로젝트
-###### - **배경:** 내부 사내 NAS 시스템의 사용자 인증 및 권한 관리를 위해 LDAP 연동 
+### 위메이드맥스 내부계정 관리 **NAS LDAP** 연동 및 전환 프로젝트
+###### - **배경:** 사내 그룹웨어 `NAS 시스템`의 사용자 인증 및 권한 관리를 위해 LDAP 연동   
+`위메이드 그룹웨어로 이관하면서 위메이드맥스 직원 그룹관리 및 파일서버 개발계정에 이용` 
 ###### - **기술 스택:** NAS LDAP, Python, Php, MySQL
 
 ---
 
 ## Project [2]-2  
 - **[LDAP LIST](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/ldap_login/internal.py)** : NAS LDAP 사용자 계정 리스트 조회 및 관리툴 개발
-- 공통 그룹웨어가 아닌 내부에서 사용하기 위해, 사원 입퇴사 관리 조직 그룹망을 구현하기 위해 자동 batch > [batch script 보기](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/ldap_login/python_auto_shell/job_autoproc.py)
+- 전사 그룹웨어가 아닌 자사 내부에서 사용하기 위해, 사원 입퇴사 관리 조직 그룹망을 구현하기 위해 자동 batch > [batch script 보기](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/ldap_login/python_auto_shell/job_autoproc.py)
 ```sh
 ##### run_account.sh crontab 설정 예시
 # 매주 월~금 09:30 ~ 19:30 매 시간 30분마다 실행
@@ -114,7 +115,7 @@ python /company/account_system/script/job_autoproc.py
 
 ---
 
-## Project [3]
+## Project [3]  ![game](https://img.shields.io/badge/game-2563EB?style=for-the-badge&labelColor=93C5FD) 
 ### 개발 테스트 서버 상황 및 내부그룹웨어 상황 알림시스템 필요
 ###### - **배경:** zabbix 모니터링 시스템과 내부 그룹웨어 상황 및 서버상태 알림을 위한 텔레그램 연동
 ###### - **기술 스택:** zabbix, Python, Php, Telegram API, SMTP, Linux
@@ -124,7 +125,7 @@ python /company/account_system/script/job_autoproc.py
 
 ---
 
-## Project [4]
+## Project [4]  ![medical](https://img.shields.io/badge/medical-16A34A?style=for-the-badge&labelColor=86EFAC)
 ### 신규 디자인 필요, SQL 쿼리의 중앙집중화, 제이쿼리정리, 공통환자모듈 필요
 ###### - **배경:** 공공의료 종사자 편의성과 관리 및 환자 개인정보 권한 강화,데이터 통합솔루션으로 기획
 - JSP 소스 Websquare5 UI로 디자인변경 및 oracle sql 동적 mybatis 추가하여 SQL 성능 향상 및 확장성으로 수정
@@ -189,7 +190,7 @@ if ((trim(file_get_contents("/proc/".posix_getppid()."/comm")) != 'flock')
 ---
 
 ## security aspect [0]
-### ROS 홈페이지 관련 Clickjacking  
+### ROS 홈페이지 관련 Clickjacking [**현재는 서비스 종료**]
 - 재화 교환소 의도치 않은 접근방지
 - 온라인 샵 구매 및 월렛 이용 후 토큰교환시  
 
@@ -225,7 +226,6 @@ $couponData = SQLDBWrapper::GetSQLDB()->select(DBTable::COUPON_DATA, $where, $bi
 ```
  - 응답헤더 버전 정보 노출 숨김처리
 ```ini
-php
 [root@localhost ~]# vim /etc/php.ini 
 ;expose_php = On
 expose_php = Off
@@ -263,7 +263,7 @@ server_tokens off; --추가
 
 ## 기술지원 Infra DevOPS [0]
  - 특정 port 허용 및 원외에서 들어오는 외부 방화벽 관리
- - 테스트 개발 VM 생성 및 Linux firewalld 사용하여 특정 IP allow, port 추가 작업
+ - 테스트 개발 VM 생성 및 Linux firewalld 사용하여 특정 IP Allow, port 추가 작업
 ```bash
 $firewall-cmd --zone=public-office --add-forward-port=port=22000:proto=tcp:toport=22:toaddr=192.168.0.1 --permanent
 $firewall-cmd --reload
@@ -385,7 +385,7 @@ static public function saveErrFile($message, $type) {
 ## 기술지원 Infra DevOps [6]
  - Juniper 방화벽 관리 및 정책설정
  - 특정 IP 대역 및 포트 허용/차단 관리  
-  Untrust, Trust zone 설정 및 정책 통해 초기 외부방화벽 설정
+  Untrust, Trust zone, DMZ 설정 및 정책 통해 초기 외부방화벽 설정
  - service set 사용자정의 프로토콜 등록처리
 
 `위 해당 관리책임장은 팀장님이 정, 저는 부의 역할로 지정된 정책만 진행하였습니다.`
@@ -400,7 +400,7 @@ static public function saveErrFile($message, $type) {
 ---
 
 ## ETC [1]
-- DB 커넥션같은 경우 매번 열어두지않고 DB I/O 효율화와 리소스 누수 방지로 요청 단위 커넥션을 재사용 함으로써 보완하였다. (**[소스원문](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/dbhelper/dbhelper.py)**)
+- DB 커넥션같은 경우 매번 열어두지않고 DB I/O 효율화와 리소스 누수 방지로 요청 단위 커넥션을 재사용 함으로써 보완하였다. (**[소스보기](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/dbhelper/dbhelper.py)**)
 ```python
 def _get_connection():  
     if not g.get('db_conn'):

@@ -40,25 +40,25 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 2022.12 ~ 재직 중  
 
 - 플랫폼 및 개발운영툴 환경 개선
-- 사내계정 NAS LDAP 생성 및 연결작업
+- 입사 후 내부 그룹웨어HR 유지보수중 위메이드 그룹웨어로 이관 
+- 사내계정 NAS LDAP 개발 계정생성 및 부서그룹 유지보수
 - 위메이드맥스 홈페이지 디자인 개선 및 글로벌 홈페이지 이벤트 및 티저사이트 생성
 - 사내 인프라 기술지원업무 유지보수 및 개선
-- 웹서버 관련 Nginx, Apache 세팅
-- ISO 관련 디렉토리 인덱싱 방어 및 SQL 인젝션 방어작업
 
   그외 
+- VM 트러블슈팅 장애대응 기술지원
 - CSR CRT CA 'SSL' 인증서 발급 및 갱신
 - Package Manager(앱 패키지파일 관리) 기반 유지보수 및 CDN 배치 구성
-- VM 트러블슈팅 장애대응 기술지원
+- 웹서버 관련 Nginx, Apache 세팅
 
 <!-- - 중요 백업파일 MySQL DB 실시간 이중화 작업 -->
 <!-- - AWS(보조) VPC(서브넷)피어링 - 라우팅테이블 - 인스턴스 등록 -->
 <!-- - jenkins 전략에 따른 배포 자동화 (shell script) -->
 <!-- - 장애 대응 자동화, 로그 관리 개선 (logrotate, Fluentd 수집 빅쿼리 모니터링)   -->
 
-**주요 성과**
-- **노후화된 운영툴 전환작업** : 기존 보안에 취약한 PHP → Python Flask 전환  
-- **Google OAuth2 인증작업** : 기존 아이디/패스워드 로그인 → Google OAuth2 인증 전환
+**주요 성과**  
+- **노후화된 운영툴 전환작업** : 기존 보안에 취약한 구 PHP → Python Flask 전환  
+- **Google OAuth2 인증작업** : 기존 아이디/패스워드 로그인 → Google OAuth2 인증
 - **개발서버 생성 및 권한관리** : VM 생성 및 네트워크 연결 및 SSH 권한작업
 - **자동화 작업** : 크론 작업 스크립트 및 오래된파일 및 계정 정리 스크립트 작성
 
@@ -84,6 +84,17 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 
 ## 🧩 주요 프로젝트
 
+> ### 모바일 쿠폰 발급 및 이벤트 연동 쿠폰 구축
+**기간:** 2025.06 ~ 2025.08  
+**기술:** Php, MySQL  
+**내용:**  
+- 게임 모바일 쿠폰 발급 시스템 설계 및 구현
+- 프로모션 쿠폰 연동 API 개발
+- 사용자 인증 및 권한 관리
+- 쿠폰 발급 및 사용 이력 관리 기능 구현
+
+---
+
 > ### Legacy PHP → Python flask 전환 프로젝트
 **기간:** 2025.01 ~ 2025.06   
 **기술:** Python Flask, MySQL, Uwsgi, Nginx, jinja2, fluentd  
@@ -95,19 +106,18 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 - 파이썬 기반 자동화 스크립트 작성
 - 보안 취약점 강화 로그인 및 세션 관리
 
-
 ---
 
-> ### 게임 모바일 쿠폰 발급 및 이벤트 연동 쿠폰 구축 프로젝트
-**기간:** 2025.06 ~ 2025.08  
-**기술:** Php, MySQL  
+> ### 위메이드맥스 내부계정 관리 NAS LDAP 연동 및 전환 프로젝트
+**기간:** 2025.01 ~ 2025.05  
+**기술:** Python, PHP, NAS LDAP, mysql
 **내용:**  
-- 게임 모바일 쿠폰 발급 시스템 설계 및 구현
-- 프로모션 쿠폰 연동 API 개발
-- 사용자 인증 및 권한 관리
-- 쿠폰 발급 및 사용 이력 관리 기능 구현
+- 내부 그룹웨어 사원 NAS LDAP 생성 및 Flask 연동 작업
+- 사내 로그인 인증 및 내부망 그룹 개발계정 노후화 전환
+- 비밀번호 보안 정책 강화
 
 ---
+
 
 > ### 홈페이지 신규 모바일 FAQ 페이지 개발 프로젝트
 **기간:** 2024.11 ~ 2025.01  
@@ -131,16 +141,6 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 
 ---
 
-> ### NAS LDAP 연동 및 전환 프로젝트
-**기간:** 2024.03 ~ 2024.06  
-**기술:** Python, PHP, NAS LDAP  
-**내용:**  
-- NAS LDAP 생성 및 Flask 연동 작업
-- 사내 로그인 인증 및 내부망 그룹 개발계정 노후화 전환
-- 비밀번호 보안 정책 강화
-
----
-
 > ### 공공의료 WebSquare 차세대 전환 프로젝트
 **기간:** 2021.06 ~ 2022.06  
 **기술:** Java, WebSquare5, Oracle DB, Spring Framework, Pl/SQL, Ajax, jQuery  
@@ -159,26 +159,33 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 ---
 <br>
 
+## 🌱 서브 프로젝트
+
+- **[Telegram-notifier](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/telegrame-smtp-autoload/lib/Telegram.php)**  
+  PHP 베이스 Telegram API Bot 기반 및 SMTP 프로토콜을 사용한 알림 라이브러리  
+
+- **[SVNAdmin](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/svn)/Gitea**  
+  기존 SVN Tortoise 에서 개발계정 소스 운영관리 및 권한 관리용 웹페이지 이식 및 빌드배포 Git연동 설치형 WEB Gitea 구축
+
+---
+<br>
 
 ## 💻 업무경험
 
 ![feature](https://img.shields.io/badge/Feature_Development-%23FF6B6B?style=flat-square&labelColor=%23FFE5E5)  
 ### 웹 기능 개발 및 시스템 구축
-- **FAQ 시스템 구축**: 모바일/PC 반응형 웹 FAQ 페이지 및 관리자 콘텐츠 관리 기능 개발
-- **텔레그램 알림 시스템**: Zabbix 모니터링 연동 및 SMTP 기반 알림 라이브러리 개발
 - **운영정책 관리 개선**: WYSIWYG 에디터(summernote) 도입 및 DB 기반 버전 관리 시스템 구축
-- **블록체인 WEMINX 연동**: WEMIX와 게임내 재화 토큰연동을 위한 SDK 이용 유지보수
-- **플랫폼 운영툴 홈페이지**: 게임내 내외부에서 보이는 `CSS` 및 디자인/팝업 연혁 이미지 및 운영툴 기능 유지보수
+- **플랫폼 운영툴 홈페이지**: 원크스롤, flex 를 활용한 `CSS` 및 디자인/팝업 연혁 수정, 및 간단한 애니메이션 [**[GAME ICON](https://www.wemademax.com/games)**]
 - **구글 애드몹 설정**: 광고매체 제공 및 앱 텍스트 설정
-
+- **블록체인 WEMINX 연동**: WEMIX와 게임내 재화 토큰연동을 위한 SDK 이용 유지보수 **[서비스종료]**  
+  
 ![devops](https://img.shields.io/badge/DevOps-%23ff66EB?style=flat-square&labelColor=%23ff66EB)  
 ### 인프라 및 배포 자동화
 - **CI/CD 관리**: Jenkins 기반 자동 배포 파이프라인 구성 및 Shell Script 작성
-- **소스 관리**: SVNAdmin 웹 인터페이스 구축, Gitea 설치형 Git 서버 구축
 - **서버 관리**: Oracle VM 생성 및 리소스 관리, SSH 권한 설정, Firewalld 방화벽 정책 관리
 - **웹서버 구성**: Nginx 리버스 프록시 설정, WebSocket 연동, SSL 인증서 관리
 - **백업 및 이중화**: 간단한 MySQL Master-Slave Replication 구성, 자동 백업 스크립트 작성
-- **로그 관리**: Fluentd 기반 로그 수집 및 로그 로테이션 설정
+- **로그 관리**: 중요로그 Fluentd 기반 로그 수집 및 로그 로테이션 설정
 - **모니터링**: Zabbix 시스템 모니터링 이용한 상태 파악
 
 ![troubleshooting](https://img.shields.io/badge/Troubleshooting-%23F59E0B?style=flat-square&labelColor=%23FED7AA)
@@ -199,17 +206,15 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
   - 서버 정보 노출 차단 (PHP/Nginx 버전 정보 숨김)
 - **Clickjacking 방어**: X-Frame-Options, CSP 헤더 설정
 - **Bot 방지**: reCAPTCHA 적용 및 2FA(OTP) 인증 구현
-- **접근 제어**: 방화벽 정책 설정, 특정 IP/Port 허용 관리, Juniper 방화벽 정책 설정 지원
+- **접근 제어**: 허가된 외부 IP/Port 허용 관리, Juniper 방화벽 정책 설정 지원
 
 ![backend](https://img.shields.io/badge/Backend-%238B5CF6?style=flat-square&labelColor=%23DDD6FE)
 
 ### 백엔드 시스템 전환 및 개선
-- **PHP → Python Flask 전환**: 노후화된 운영툴 현대화 작업
-- **API 개발**: flask route 이용한 buleprint 설정, flask-admin 이용 expose 설정
+- **PHP  → Python Flask 전환**: 노후화된 운영툴 리라이팅(Rewriting) 작업
+- **API 개발**: flask route 이용한 buleprint, flask-admin 이용 expose 이용한 웹 END point 작성
 - **세션 관리 개선**: 서버 사이드 세션(CacheLib) 적용, 세션 타임아웃 설정
-- **코드 품질 개선**: 공통 모듈화, 보일러플레이트 구성
-
-
+- **코드 품질 개선**: 공통 모듈화, 프레임워크 보일러플레이트 구성
 
 ---
 <br>
@@ -218,32 +223,21 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 
 | 분야 | 기술 |
 |------|------|
-| Frontend | HTML, CSS(SCSS), JavaScript(ES6), Jquery |
-| Backend / Infra | Apache, Nginx, RestAPI, FastAPI, GCP, Azure |
+| Main | PHP, Python, Java, HTML, CSS(SCSS), JavaScript, Jquery |
+| Backend / Infra | Apache, Nginx, RestAPI, FastAPI, GCP |
 | DevOps | Gitea, Jenkins, SVN, NAS, Oracle VM, Linux |
 | Test / Tooling | VScode, Pycharm, Xshell, Workbench |
 | Database | MySQL, Oracle, Redis |
 | ETC | TypeScript(기초), Telegram, SMTP |
 
 ---
-
-## 🌱 서브 프로젝트
-
-- **[Telegram-notifier](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/telegrame-smtp-autoload/lib/Telegram.php)**  
-  PHP 베이스 Telegram API Bot 기반 및 SMTP 프로토콜을 사용한 메일 알림 라이브러리  
-
-- **[SVNAdmin](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/svn)/Gitea**  
-  기존 SVN Tortoise 에서 개발계정 소스 운영관리 및 권한 관리용 웹페이지 이식 및 빌드배포 Git연동 설치형 WEB Gitea 구축
-
-
----
+<br>
 
 <!-- ## 🌍 오픈소스 기여
 
-- [marp-team/marpit]()- README 개선  
+- []()- README 개선  
 
 --- -->
-<br>
 
 ## 🎓 학력
 **한국방송통신대학교**  
@@ -271,7 +265,8 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 - **정보처리산업기사** (2018.05)  
 
 ---
+<br>
 
 
-
-_Last Updated: 2025-10-22_
+_Last Updated: 2025-10-22_  
+감사합니다.
