@@ -49,7 +49,6 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
   그외 
 - CSR CRT CA 'SSL' 인증서 발급 및 갱신
 - Package Manager(앱 패키지파일 관리) 기반 유지보수 및 CDN 배치 구성
-- Zabbix 모니터링 툴 관리
 - VM 트러블슈팅 장애대응 기술지원
 
 <!-- - 중요 백업파일 MySQL DB 실시간 이중화 작업 -->
@@ -160,6 +159,61 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 ---
 <br>
 
+
+## 💻 업무경험
+
+![feature](https://img.shields.io/badge/Feature_Development-%23FF6B6B?style=flat-square&labelColor=%23FFE5E5)  
+### 웹 기능 개발 및 시스템 구축
+- **FAQ 시스템 구축**: 모바일/PC 반응형 웹 FAQ 페이지 및 관리자 콘텐츠 관리 기능 개발
+- **텔레그램 알림 시스템**: Zabbix 모니터링 연동 및 SMTP 기반 알림 라이브러리 개발
+- **운영정책 관리 개선**: WYSIWYG 에디터(summernote) 도입 및 DB 기반 버전 관리 시스템 구축
+- **블록체인 WEMINX 연동**: WEMIX와 게임내 재화 토큰연동을 위한 SDK 이용 유지보수
+- **플랫폼 운영툴 홈페이지**: 게임내 내외부에서 보이는 `CSS` 및 디자인/팝업 연혁 이미지 및 운영툴 기능 유지보수
+- **구글 애드몹 설정**: 광고매체 제공 및 앱 텍스트 설정
+
+![devops](https://img.shields.io/badge/DevOps-%23ff66EB?style=flat-square&labelColor=%23ff66EB)  
+### 인프라 및 배포 자동화
+- **CI/CD 관리**: Jenkins 기반 자동 배포 파이프라인 구성 및 Shell Script 작성
+- **소스 관리**: SVNAdmin 웹 인터페이스 구축, Gitea 설치형 Git 서버 구축
+- **서버 관리**: Oracle VM 생성 및 리소스 관리, SSH 권한 설정, Firewalld 방화벽 정책 관리
+- **웹서버 구성**: Nginx 리버스 프록시 설정, WebSocket 연동, SSL 인증서 관리
+- **백업 및 이중화**: 간단한 MySQL Master-Slave Replication 구성, 자동 백업 스크립트 작성
+- **로그 관리**: Fluentd 기반 로그 수집 및 로그 로테이션 설정
+- **모니터링**: Zabbix 시스템 모니터링 이용한 상태 파악
+
+![troubleshooting](https://img.shields.io/badge/Troubleshooting-%23F59E0B?style=flat-square&labelColor=%23FED7AA)
+
+### 장애 대응 및 성능 최적화
+- **트러블슈팅**: VM 용량 관리, Swap 메모리 관리, 디스크 파티션 확장 작업
+- **성능 개선**: 알림 시스템 비동기 처리 전환(PHP → Python), DB 커넥션 풀링 최적화
+- **중복 방지**: 프로세스 Lock 메커니즘 구현, 대량 알림 발송 시 중복 전송 방지
+- **에러 로그 분석**: 시스템 로그 분석 및 장애 원인 파악, 재발 방지 대책 수립
+
+![security](https://img.shields.io/badge/Security-%23FF6347?style=flat-square&labelColor=%23FFA07A)
+
+### 보안 강화 및 취약점 대응
+- **ISO 보안 심사 대응**: 
+  - SQL Injection 방어 (Prepared Statement 적용)
+  - XSS 방어 (HTML 특수문자 이스케이프 처리)
+  - 세션 하이재킹 방어 (세션 고정 방지, 쿠키 보안 설정)
+  - 서버 정보 노출 차단 (PHP/Nginx 버전 정보 숨김)
+- **Clickjacking 방어**: X-Frame-Options, CSP 헤더 설정
+- **Bot 방지**: reCAPTCHA 적용 및 2FA(OTP) 인증 구현
+- **접근 제어**: 방화벽 정책 설정, 특정 IP/Port 허용 관리, Juniper 방화벽 정책 설정 지원
+
+![backend](https://img.shields.io/badge/Backend-%238B5CF6?style=flat-square&labelColor=%23DDD6FE)
+
+### 백엔드 시스템 전환 및 개선
+- **PHP → Python Flask 전환**: 노후화된 운영툴 현대화 작업
+- **API 개발**: flask route 이용한 buleprint 설정, flask-admin 이용 expose 설정
+- **세션 관리 개선**: 서버 사이드 세션(CacheLib) 적용, 세션 타임아웃 설정
+- **코드 품질 개선**: 공통 모듈화, 보일러플레이트 구성
+
+
+
+---
+<br>
+
 ## 🧠 기술 스택
 
 | 분야 | 기술 |
@@ -173,7 +227,7 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 
 ---
 
-## 🌱 개인 프로젝트
+## 🌱 서브 프로젝트
 
 - **[Telegram-notifier](https://github.com/cowboy779/2025_resume-main/blob/main/html/admin/telegrame-smtp-autoload/lib/Telegram.php)**  
   PHP 베이스 Telegram API Bot 기반 및 SMTP 프로토콜을 사용한 메일 알림 라이브러리  

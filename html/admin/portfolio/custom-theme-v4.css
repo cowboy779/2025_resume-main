@@ -113,3 +113,20 @@ ul {
   transform: translateX(-50%);
   width: 500px;
 }
+
+
+/* -------------------
+ * [추가] 텍스트 하이라이트 (Span)
+ * ------------------- */
+span.mark-green {
+  color: #4CAF50; /* 선명한 녹색 */
+}
+span.mark-blue {
+  color: #0070f3; /* 선명한 파란색 */
+}
+span.mark-gray {
+  color: #555; 
+}
+span.mark-pink {
+  color: palevioletred; 
+}
