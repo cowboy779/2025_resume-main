@@ -1,32 +1,245 @@
----
-style: "./resume.css"
----
+<style>
+/* * 1. [폰트] Pretendard (부드럽고 가독성 높은 폰트)
+ * CDN을 통해 웹 폰트를 불러옵니다.
+ */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 
-# 오정훈 | Web Developer · DevOps
+/* * 1-1. [A4 페이지 설정 - Microsoft Word 기본 여백] 
+ */
+@page {
+  size: A4 portrait; /* A4 세로 */
+  margin-top: 20mm;
+  margin-right: 25.4mm;
+  margin-bottom: 25.4mm;
+  margin-left: 15.4mm;
+}
 
-📍 경기 성남시 분당구
-📧 cowboy779@naver.com
-<!-- 🌐 [](https://)   -->
-💻 [https://github.com/cowboy779](https://github.com/cowboy779/2025_resume-main/tree/main/html/admin/)  
-📱 010-8809-3586  
+/* * 2. [전체] 폰트 및 컬러 이모지 설정
+ */
+section {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif,
+               "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-weight: 400;
+  line-height: 1.6;
+  color: #343a40;
+  background-color: #fff;
+  
+  width: 210mm;
+  min-height: 297mm;
+  
+  /* 이중 여백 방지를 위해 padding 제거 */
+  
+  margin: 0 auto;
+  font-size: 10pt;
+  box-sizing: border-box;
+  justify-content: flex-start; /* 내용을 위에서부터 정렬 */
+}
 
+/* * 3. 제목 (H1): 이름 */
+h1 {
+  font-size: 22pt;
+  font-weight: 800;
+  color: #111;
+  margin-top: 0;
+  margin-bottom: 6pt;
+  padding-bottom: 0;
+  border-bottom: none;
+  page-break-after: avoid;
+}
+
+/* * 4. 연락처/소개 (H1 바로 다음 문단) */
+h1 + p {
+  font-size: 10pt;
+  font-weight: 300;
+  color: #495057;
+  margin-top: 0;
+  margin-bottom: 12pt;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 10pt;
+  line-height: 1.5;
+}
+h1 + p a { 
+  color: #495057; 
+  text-decoration: none; 
+}
+
+/* * 5. 섹션 제목 (H2): 소개, 경력 요약 등 */
+h2 {
+  font-size: 14pt;
+  font-weight: 700;
+  color: #212529;
+  border-bottom: 2px solid #f1f3f5;
+  padding-bottom: 3pt;
+  margin-top: 20pt;
+  margin-bottom: 10pt;
+  page-break-after: avoid;
+}
+
+/* * 6. 하위 섹션 제목 (H3): 회사명, 프로젝트명 등 */
+h3 {
+  font-size: 11.5pt;
+  font-weight: 700;
+  color: #212529;
+  margin-top: 12pt;
+  margin-bottom: 6pt;
+  page-break-after: avoid;
+}
+
+/* * 7. [!!! 수정된 부분 !!!] 
+ * "레터박스" 또는 "액센트 바" 스타일
+ * 기존의 두꺼운 테두리, 그림자, 흰색 배경 대신
+ * 왼쪽에만 깔끔한 '바(Bar)'가 들어간 스타일입니다.
+ */
+blockquote {
+  background-color: #f8f9fa;  /* 아주 연한 회색 배경 */
+  border-radius: 5px;         /* 살짝 둥근 모서리 */
+  padding: 14pt 16pt;         /* 안쪽 여백 */
+  margin: 12pt 0;             /* 바깥 여백 */
+  
+  /* [!!! 핵심 수정 !!!] */
+  /* 왼쪽 '액센트 바' (레터박스) 스타일 */
+  border-left: 5px solid #007bff; /* 파란색으로 포인트 */
+
+  /* 나머지 테두리는 모두 제거 */
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  box-shadow: none; /* 그림자 제거 */
+
+  font-style: normal;
+  font-size: 10pt;
+  page-break-inside: avoid;
+}
+blockquote h3:first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+
+/* * 8. 테이블 (table): 경력 요약, 기술 스택 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8pt;
+  margin-bottom: 12pt;
+  border: 1px solid #e9ecef;
+  font-size: 9.5pt;
+  border-radius: 8px;
+  overflow: hidden;
+  page-break-inside: avoid;
+}
+th, td {
+  border: none;
+  border-bottom: 1px solid #e9ecef;
+  padding: 8pt 10pt;
+  text-align: left;
+  vertical-align: top;
+}
+th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+tr:last-child td { border-bottom: none; }
+table th:first-child,
+table td:first-child { 
+  width: 25%; 
+  font-weight: 600; 
+}
+
+/* * 9. 목록 (ul) */
+ul {
+  padding-left: 12pt;
+  list-style-type: none;
+  margin-top: 6pt;
+  margin-bottom: 10pt;
+}
+ul li {
+  margin-bottom: 4pt;
+  position: relative;
+  padding-left: 0;
+  page-break-inside: avoid;
+}
+ul li::before {
+  content: '•';
+  position: absolute;
+  left: -12pt;
+  top: 0;
+  color: #868e96;
+  font-size: 11pt;
+}
+
+/* * 10. 수평선 (hr): --- */
+hr {
+  border: 0;
+  height: 1px;
+  background: #e9ecef;
+  margin: 20pt 0;
+  page-break-after: avoid;
+}
+
+/* * 11. 링크 (a) */
+a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+a:hover { 
+  text-decoration: underline; 
+}
+
+/* * 12. 이미지 (img): 뱃지 스타일 */
+img {
+  max-width: 100%;
+  vertical-align: text-bottom;
+  margin-right: 3pt;
+  border-radius: 3pt;
+}
+
+/* * 13. 코드 (code) */
+code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 9pt;
+  background-color: #f1f3f5;
+  color: #d6336c;
+  padding: 2pt 4pt;
+  border-radius: 3pt;
+}
+
+/* * 14. 문단 간격 */
+p {
+  margin-top: 6pt;
+  margin-bottom: 6pt;
+}
+
+/* * 15. 인쇄 최적화 (이전 대화에서 수정된 내용) */
+/* (중복되는 @media print 블록 제거됨) */
+</style>
+
+
+# 오정훈 | Web Developer · DevOps  
+
+>📍 경기 성남시 분당구
+>🌐 cowboy779@naver.com
+>💻 [https://github.com/cowboy779](https://github.com/cowboy779/>2025_resume-main/tree/main/html/admin/)  
+>📱 010-8809-3586  
+ 
 ---
 
 ## 🧑‍💻 소개
+>>
+>함께 성장하는 개발자 오정훈입니다.  
+>현재 WEMADE MAX (LIGHTCON Corp)에서 **Platform Web Developer & DevOps**로 근무 중입니다.  
+>>
+>“번잡하지 않고, 최소한의 리소스로 최대의 효과”를 추구하는,  
+>**읽기 좋은 코드**, **개발 생산성 개선**, **안정화된 개발환경**, **자동화 배포**, 에 관심이 많습니다.  
+>WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제를 해결할 수 있다고 믿습니다. ✨
+>>
 
-함께 성장하는 개발자 오정훈입니다.  
-현재 WEMADE MAX (LIGHTCON Corp)에서 **Platform Web Developer & DevOps**로 근무 중입니다.  
-
-“번잡하지 않고, 최소한의 리소스로 최대의 효과”를 추구하는,  
-**읽기 좋은 코드**, **개발 생산성 개선**, **안정화된 개발환경**, **자동화 배포**, 에 관심이 많습니다.  
-WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제를 해결할 수 있다고 믿습니다.
-> #DevOps는 재밌어요 ✨  
 
 ## 💼 경력 요약
 
 | 회사명 | 직책 | 기간 | 주요 업무 |
 | :----- | :--- | :--- | :------- |
-| LIGHTCON Corp | Platform WEB Developer /<br> DevOps | 2022.12 ~ 재직 | 플랫폼 운영툴 환경 개선, CI/CD 구축,<Br> Jenkins 배포 자동화 |
+| LIGHTCON Corp | Platform WEB Developer /<br> DevOps | 2022.12 ~ 재직 | 플랫폼 운영툴 유지보수, 개발계정 및 그룹관리, CI/CD 관리, Jenkins 배포 자동화, 인프라 기술지원|
 | 전국지방의료원 엽합회 | Web Back-end Developer | 2019.05 ~ 2022.11 | 차세대 프로젝트, UI/UX 고도화 작업,<br> 수가코드 DB/SQL 기능개발 |
 
 ---
@@ -172,18 +385,18 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 
 ![feature](https://img.shields.io/badge/Feature_Development-%23FF6B6B?style=flat-square&labelColor=%23FFE5E5)  
 ### 웹 기능 개발 및 시스템 구축
-- **운영정책 관리 개선**: WYSIWYG 에디터(summernote) 도입 및 DB 기반 버전 관리 시스템 구축
+- **운영정책 관리 개선**: WYSIWYG 에디터(summernote) 도입 및 DB 기반 버전 관리 시스템 개발
 - **플랫폼 운영툴 홈페이지**: 원크스롤, flex 를 활용한 `CSS` 및 디자인/팝업 연혁 수정, 및 간단한 애니메이션 [**[GAME ICON](https://www.wemademax.com/games)**]
-- **구글 애드몹 설정**: 광고매체 제공 및 앱 텍스트 설정
+- **구글 애드몹 설정**: 광고매체 제공 및 앱 텍스트 사용자화면 개발
 - **블록체인 WEMINX 연동**: WEMIX와 게임내 재화 토큰연동을 위한 SDK 이용 유지보수 **[서비스종료]**  
   
 ![devops](https://img.shields.io/badge/DevOps-%23ff66EB?style=flat-square&labelColor=%23ff66EB)  
 ### 인프라 및 배포 자동화
-- **CI/CD 관리**: Jenkins 기반 자동 배포 파이프라인 구성 및 Shell Script 작성
+- **CI/CD 관리**: Jenkins 기반 자동 배포 파이프라인 구성 및 Shell Script 작업
 - **서버 관리**: Oracle VM 생성 및 리소스 관리, SSH 권한 설정, Firewalld 방화벽 정책 관리
 - **웹서버 구성**: Nginx 리버스 프록시 설정, WebSocket 연동, SSL 인증서 관리
 - **백업 및 이중화**: 간단한 MySQL Master-Slave Replication 구성, 자동 백업 스크립트 작성
-- **로그 관리**: 중요로그 Fluentd 기반 로그 수집 및 로그 로테이션 설정
+- **로그 관리**: 중요로그 Fluentd 기반 로그 수집 및 로그 로테이션 작업
 - **모니터링**: Zabbix 시스템 모니터링 이용한 상태 파악
 
 ![troubleshooting](https://img.shields.io/badge/Troubleshooting-%23F59E0B?style=flat-square&labelColor=%23FED7AA)
@@ -192,7 +405,7 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
 - **트러블슈팅**: VM 용량 관리, Swap 메모리 관리, 디스크 파티션 확장 작업
 - **성능 개선**: 알림 시스템 비동기 처리 전환(PHP → Python), DB 커넥션 풀링 최적화
 - **중복 방지**: 프로세스 Lock 메커니즘 구현, 대량 알림 발송 시 중복 전송 방지
-- **에러 로그 분석**: 시스템 로그 분석 및 장애 원인 파악, 재발 방지 대책 수립
+- **에러 로그 분석**: 시스템 로그 분석 및 장애 원인 파악, 재발 방지 대책 지원
 
 ![security](https://img.shields.io/badge/Security-%23FF6347?style=flat-square&labelColor=%23FFA07A)
 
@@ -204,12 +417,12 @@ WEB 플랫폼 개발자도, DevOps를 이해하면 더 넓은 시야로 문제�
   - 서버 정보 노출 차단 (PHP/Nginx 버전 정보 숨김)
 - **Clickjacking 방어**: X-Frame-Options, CSP 헤더 설정
 - **Bot 방지**: reCAPTCHA 적용 및 2FA(OTP) 인증 구현
-- **접근 제어**: 허가된 외부 IP/Port 허용 관리, Juniper 방화벽 정책 설정 지원
+- **접근 제어**: 허가된 외부 IP/Port 허용 관리, Juniper 방화벽 정책 설정 작업
 
 ![backend](https://img.shields.io/badge/Backend-%238B5CF6?style=flat-square&labelColor=%23DDD6FE)
 
 ### 백엔드 시스템 전환 및 개선
-- **PHP  → Python Flask 전환**: 노후화된 운영툴 리라이팅(Rewriting) 작업
+- **PHP → Python Flask 전환**: 노후화된 운영툴 리라이팅(Rewriting) 작업
 - **API 개발**: flask route 이용한 buleprint, flask-admin 이용 expose 이용한 웹 END point 작성
 - **세션 관리 개선**: 서버 사이드 세션(CacheLib) 적용, 세션 타임아웃 설정
 - **코드 품질 개선**: 공통 모듈화, 프레임워크 보일러플레이트 구성
