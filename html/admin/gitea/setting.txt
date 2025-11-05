@@ -1,0 +1,22 @@
+location ~ \.php$ {
+            root           /ltcon;
+            fastcgi_pass   unix:/run/php-fpm/www.sock;
+            fastcgi_index  index.php;
+            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+            include        fastcgi_params;
+        }
+
+
+sudo useradd \
+   --system \
+   --shell /bin/bash \
+   --comment 'Git Version Control' \
+   --create-home \
+   --home /home/git \
+   git
+
+
+VERSION=1.24.3
+sudo wget -O /tmp/gitea https://dl.gitea.io/gitea/${VERSION}/gitea-${VERSION}-linux-amd64
+
+sudo -u git ROOT_URL="https://loaclhost:8015/gitea/" /usr/local/bin/gitea web
