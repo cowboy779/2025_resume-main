@@ -1,8 +1,7 @@
 ---
 marp: true
-paginate: true
-class: lead
 paginate: false
+class: lead
 title: "오정훈 - Portfolio"
 style: |
   @import url('custom-theme-v4.css');
