@@ -2,6 +2,7 @@
 marp: true
 paginate: true
 class: lead
+paginate: false
 title: "오정훈 - Portfolio"
 style: |
   @import url('custom-theme-v4.css');
@@ -91,7 +92,7 @@ return makeResponse(CouponResult::OK, $coupons);
 ![Account](../ldap_login/images/account_list.png)  
 ### 위메이드맥스 내부계정 관리 **NAS LDAP** 연동 및 전환 프로젝트
 ###### - **배경:** 사내 그룹웨어 `NAS 시스템`의 사용자 인증 및 권한 관리를 위해 LDAP 연동   
-`위메이드 그룹웨어로 이관하면서 위메이드맥스 직원 그룹관리 및 파일서버 개발계정에 이용` 
+`위메이드 그룹웨어로 이관 > 위메이드맥스 직원 그룹관리 및 파일서버 개발계정에 이용` 
 ###### - **기술 스택:** NAS LDAP, Python, Php, MySQL
 
 ---
