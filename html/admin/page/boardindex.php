@@ -35,7 +35,7 @@ function GetIntVal($key, $obj, $default = 0) {
 <head>
 <meta charset="UTF-8">
 <title>게시판</title>
-<link rel="stylesheet" type="text/css" href="./page/css/style.css" />
+<link rel="stylesheet" type="text/css" href="./css/style.css" />
 </head>
 <body>
 <div id="board_area"> 
