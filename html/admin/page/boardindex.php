@@ -1,5 +1,5 @@
 <?php 
-include $_SERVER['DOCUMENT_ROOT']."/admin/page/db.php"; 
+include  __DIR__ ."/db.php"; 
 
 if (session_status() == PHP_SESSION_NONE) {
   session_start();
@@ -9,9 +9,6 @@ if (session_status() == PHP_SESSION_NONE) {
 // ini_set("session.cookie_lifetime", 0); 
 // ini_set("session.cache_expire", 1); 
 // ini_set("session.gc_maxlifetime",10);
-
-// echo $_SESSION['user_id'];
-// echo $_SESSION['user_role'].'<br>';
 
 function Now() {
   if (isset($GLOBALS['NOWTIME']) == false) {
@@ -27,10 +24,10 @@ function GetIntVal($key, $obj, $default = 0) {
   return (int) $default;
 }
 
- $_SESSION['WEMADEMAX_HOMEPAGE_ADMIN_SVC_EXPIRE'] = (Now() + 3600);
- echo session_id().'</br>';
- echo GetIntVal('WEMADEMAX_HOMEPAGE_ADMIN_SVC_EXPIRE', $_SESSION).'</br>';
-echo Now();
+// $_SESSION['WEMADEMAX_HOMEPAGE_ADMIN_SVC_EXPIRE'] = (Now() + 3600);
+// echo session_id().'</br>';
+// echo GetIntVal('WEMADEMAX_HOMEPAGE_ADMIN_SVC_EXPIRE', $_SESSION).'</br>';
+// echo Now();
 ?>
 
 
@@ -176,12 +173,12 @@ echo Now();
     </div>
     <?php if(!isset($_SESSION['user_id'])) { ?>
         <div id="write_btn">
-            <a href="/admin/page/pagelogin.php"><button>글쓰기</button></a>
+            <a href="./pagelogin.php"><button>글쓰기</button></a>
         </div>
     <?php }else{ ?>
         <div id="write_btn">
-            <a href="/admin/page/write.php"><button>글쓰기</button></a>
-            <a href="/admin/page/pagelogout.php"><button>로그아웃</button></a>
+            <a href="./write.php"><button>글쓰기</button></a>
+            <a href="./pagelogout.php"><button>로그아웃</button></a>
         </div>
      <?php } ?>    
   </div>

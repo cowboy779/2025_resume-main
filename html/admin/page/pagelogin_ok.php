@@ -1,4 +1,4 @@
-<?php include  $_SERVER['DOCUMENT_ROOT']."/admin/page/db.php";
+<?php include __DIR__ ."/db.php";
     if ( !isset($_POST['user_id']) || !isset($_POST['user_pw']) ) {
         header("Content-Type: text/html; charset=UTF-8");
         echo "<script>alert('아이디 또는 비밀번호가 빠졌거나 잘못된 접근입니다.');";
