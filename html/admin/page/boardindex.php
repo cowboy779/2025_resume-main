@@ -49,7 +49,7 @@ function GetIntVal($key, $obj, $default = 0) {
                 <th width="120">글쓴이</th>
                 <th width="100">작성일</th>
                 <th width="100">조회수</th>
-                <th width="100">추천수</th>te
+                <th width="100">추천수</th>
             </tr>
         </thead>
         <?php 
@@ -63,7 +63,7 @@ function GetIntVal($key, $obj, $default = 0) {
             <td width="500">
                 <?php 
                     if($noti['hit'] >= 10){
-                        $img = "<img src='./img/hot.png' alt='new' title='new' />";
+                        $img = "<img src='../img/hot.png' alt='new' title='new' />";
                     }else{
                         $img ="";
                     }
@@ -115,8 +115,8 @@ function GetIntVal($key, $obj, $default = 0) {
           <td width="70"><?php echo $board['idx']; ?></td>
           <td width="500">
             <?php 
-                if($board['hit'] >= 50){
-                    $img = "<img src='./img/hot.png' alt='new' title='new' />";
+                if($board['hit'] >= 10){
+                    $img = "<img src='../img/hot.png' alt='new' title='new' />";
                   }else{
                     $img ="";
                   }
