@@ -63,7 +63,7 @@ function GetIntVal($key, $obj, $default = 0) {
             <td width="500">
                 <?php 
                     if($noti['hit'] >= 10){
-                        $img = "<img src='../img/hot.png' alt='new' title='new' />";
+                        $img = "<img src='/page/img/hot.png' alt='new' title='new' />";
                     }else{
                         $img ="";
                     }
@@ -116,7 +116,7 @@ function GetIntVal($key, $obj, $default = 0) {
           <td width="500">
             <?php 
                 if($board['hit'] >= 10){
-                    $img = "<img src='../img/hot.png' alt='new' title='new' />";
+                    $img = "<img src='/page/img/hot.png' alt='new' title='new' />";
                   }else{
                     $img ="";
                   }
