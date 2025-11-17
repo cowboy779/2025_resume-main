@@ -35,7 +35,7 @@ function GetIntVal($key, $obj, $default = 0) {
 <head>
 <meta charset="UTF-8">
 <title>게시판</title>
-<link rel="stylesheet" type="text/css" href="/admin/page/css/style.css" />
+<link rel="stylesheet" type="text/css" href="./css/style.css" />
 </head>
 <body>
 <div id="board_area"> 
@@ -68,7 +68,7 @@ function GetIntVal($key, $obj, $default = 0) {
                         $img ="";
                     }
                 ?>
-                <a href="/admin/page/readHit.php?idx=<?php echo $noti["idx"];?>"><?php echo $noti["title"];?><?php echo $img; ?></a>
+                <a href="./readHit.php?idx=<?php echo $noti["idx"];?>"><?php echo $noti["title"];?><?php echo $img; ?></a>
             </td>
             <td width="120"><?php echo $noti['name']?></td>
             <td width="100"><?php echo $noti['date']?></td>
@@ -116,12 +116,12 @@ function GetIntVal($key, $obj, $default = 0) {
           <td width="500">
             <?php 
                 if($board['hit'] >= 50){
-                    $img = "<img src='/admin/page/img/hot.png' alt='new' title='new' />";
+                    $img = "<img src='./img/hot.png' alt='new' title='new' />";
                   }else{
                     $img ="";
                   }
             ?>
-            <a href="/admin/page/readHit.php?idx=<?php echo $board["idx"];?>"><?php echo $title;?><?php echo $img; ?></a>
+            <a href="./readHit.php?idx=<?php echo $board["idx"];?>"><?php echo $title;?><?php echo $img; ?></a>
           </td>
           <td width="120"><?php echo $board['name']?></td>
           <td width="100"><?php echo $board['date']?></td>
@@ -169,7 +169,6 @@ function GetIntVal($key, $obj, $default = 0) {
       </ul>
     </div>
     <div id="main_btn">
-      <!-- <a href="/admin/main.php"><button>메인으로</button></a> -->
     </div>
     <?php if(!isset($_SESSION['user_id'])) { ?>
         <div id="write_btn">
