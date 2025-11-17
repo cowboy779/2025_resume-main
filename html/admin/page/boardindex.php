@@ -54,7 +54,7 @@ function GetIntVal($key, $obj, $default = 0) {
         </thead>
         <?php 
               $sqlnoti = mq("select * from board where noti ='y' order by date desc limit 0, 3;"); 
-              error_log(var_export($sqlnoti,true));
+              //error_log(var_export($sqlnoti,true));
               while($noti = $sqlnoti->fetch_array()){
         ?>
             <tbody>
@@ -63,7 +63,7 @@ function GetIntVal($key, $obj, $default = 0) {
             <td width="500">
                 <?php 
                     if($noti['hit'] >= 10){
-                        $img = "<img src='/admin/page/img/hot.png' alt='new' title='new' />";
+                        $img = "<img src='./img/hot.png' alt='new' title='new' />";
                     }else{
                         $img ="";
                     }
