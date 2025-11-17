@@ -8,11 +8,11 @@ $suser_role = $_SESSION['user_role'];
 <head>
 <meta charset="UTF-8">
 <title>게시판</title>
-<link rel="stylesheet" type="text/css" href="/admin/page/css/style.css" />
+<link rel="stylesheet" type="text/css" href="./css/style.css" />
 </head>
 <body>
     <div id="board_write">
-        <h1><a href="/admin/page/boardindex.php">자유게시판</a></h1>
+        <h1><a href="./boardindex.php">자유게시판</a></h1>
         <h4>글을 작성하는 공간입니다.</h4>
             <div id="write_area">
                 <form action="write_ok.php" method="post">

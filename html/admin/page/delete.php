@@ -1,8 +1,8 @@
 <?php
-	include $_SERVER['DOCUMENT_ROOT']."/admin/page/db.php";
+	include __DIR__ ."/db.php";
 	
 	$bno = $_GET['idx'];
 	$sql = mq("delete from board where idx='$bno';");
 ?>
 <script type="text/javascript">alert("삭제되었습니다.");</script>
-<meta http-equiv="refresh" content="0 url=/admin/page/boardindex.php" />
+<meta http-equiv="refresh" content="0 url=./boardindex.php" />

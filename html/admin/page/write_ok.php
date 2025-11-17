@@ -1,4 +1,4 @@
-<?php include $_SERVER['DOCUMENT_ROOT']."/admin/page/db.php";
+<?php include __DIR__ ."/db.php";
 
 //각 변수에 write.php에서 input name값들을 저장한다
 $username = $_POST['name'];
@@ -18,7 +18,7 @@ if(isset($noti)){
 if($username && $userpw && $title && $content){
     $sql = mq("insert into board(name,pw,title,content,date,noti) values('".$username."','".$userpw."','".$title."','".$content."','".$date."','".$noti."')");
     echo "<script> alert('글쓰기 완료되었습니다.');
-    location.href='/admin/page/boardindex.php';</script>";
+    location.href='./boardindex.php';</script>";
 }else{
     echo "<script>
     alert('글쓰기에 실패했습니다.');

@@ -1,5 +1,5 @@
 <?php
-	include $_SERVER['DOCUMENT_ROOT']."/admin/page/db.php";
+	include __DIR__ ."/db.php";
    
 	$bno = $_GET['idx'];
     $thumbup = mysqli_fetch_array(mq("select thumbup from board where idx='$bno';"));
@@ -8,4 +8,4 @@
 
     ?>
     <script type="text/javascript">alert("추천되었습니다.");</script>
-    <meta http-equiv="refresh" content="0 url=/admin/page/read.php?idx=<?php echo $bno; ?>">
+    <meta http-equiv="refresh" content="0 url=./read.php?idx=<?php echo $bno; ?>">

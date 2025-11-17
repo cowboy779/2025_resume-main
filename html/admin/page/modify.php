@@ -1,5 +1,5 @@
 <?php
-	include $_SERVER['DOCUMENT_ROOT']."/admin/page/db.php";
+	include __DIR__ . "/db.php";
    
 	$bno = $_GET['idx'];
 	$sql = mq("select * from board where idx='$bno';");
@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>게시판</title>
-<link rel="stylesheet" href="/admin/page/css/style.css" />
+<link rel="stylesheet" href="./css/style.css" />
 </head>
 <body>
     <div id="board_write">

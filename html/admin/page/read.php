@@ -1,4 +1,4 @@
-<?php include $_SERVER['DOCUMENT_ROOT']."/admin/page/db.php";
+<?php include __DIR__ ."/db.php";
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -12,7 +12,7 @@ $suer_role = $_SESSION['user_role'];
 <head>
 <meta charset="UTF-8">
 <title>게시판</title>
-<link rel="stylesheet" type="text/css" href="/admin/page/css/style.css" />
+<link rel="stylesheet" type="text/css" href="./css/style.css" />
 </head>
 <body>
 	<?php
@@ -36,7 +36,7 @@ $suer_role = $_SESSION['user_role'];
 	<!-- 목록, 수정, 삭제 -->
 	<div id="bo_ser">
 		<ul>
-			<li><a href="/admin/page/boardindex.php">[목록으로]</a></li>
+			<li><a href="./boardindex.php">[목록으로]</a></li>
             <li><a href="thumbup.php?idx=<?php echo $board['idx']; ?>">[추천]</a></li>
 
 			<?php if($suer_role =="ad"|| isset($suer_id) && $board['name'] == $suer_id){ ?>
