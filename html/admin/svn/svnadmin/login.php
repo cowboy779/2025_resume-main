@@ -56,6 +56,6 @@ $logged_out = check_request_var("loggedout");
 //
 
 SetValue("LoggedOut", $logged_out);
-error_log(var_export('여기5',true));
+
 ProcessTemplate("login.html.php");
 ?>

@@ -258,10 +258,6 @@ class Engine
 				++$i;
 			}
 		}
-		error_log(var_export('포워드시작',true));
-		error_log(var_export($location,true));
-		error_log(var_export($params,true));
-		error_log(var_export($_SESSION["svnadmin_username"],true));
 		// Set the forward now.
 		header('Location: ' . $location . $params);
 

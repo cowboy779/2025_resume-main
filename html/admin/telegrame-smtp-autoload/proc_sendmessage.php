@@ -41,8 +41,6 @@ function SendMessage($rowdata)
     //if ($media != 'email') $media = 'all';
 
     if ($media == 'all' || $media == 'email' || $media == 'telegram') {
-        error_log(var_export('텔레그램으로접속',true));
-
         $to = GetStrVal('to', $datas);
         $subject = GetStrVal('subject', $datas);
         $message = GetStrVal('message', $datas);

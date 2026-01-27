@@ -8,7 +8,7 @@ $content = $_POST['content'];
 $date = date('Y-m-d');
 
 $noti = $_POST['noti'];
-error_log(var_export($noti,true));
+
 if(isset($noti)){
     $noti ="Y";
 }else{

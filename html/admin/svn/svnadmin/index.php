@@ -96,9 +96,6 @@ if($appEngine->getAclManager()->userHasRole($appEngine->getSessionUsername(), 'A
     // Access Path
     $pathDatas = [];
     $paths = $appEngine->getAccessPathViewProvider()->getPaths();
-    //
-    error_log(var_export('paths 시작',true));
-    error_log(var_export($paths,true));
     
     usort($paths, array('\svnadmin\core\entities\AccessPath', "compare"));
     
@@ -111,10 +108,6 @@ if($appEngine->getAclManager()->userHasRole($appEngine->getSessionUsername(), 'A
 
         $groups = $appEngine->getAccessPathViewProvider()->getGroupsOfPath($oPath);
         usort($groups, array('\svnadmin\core\entities\Group',"compare"));
-
-        //
-        error_log(var_export($users,true));
-        error_log(var_export($groups,true));
 
         $pd = ['info'=>$oPath, 'group'=>[], 'member'=>[], 'unlink'=>[], 'tag'=>$oPath->tag];
         foreach ($groups as $oGroup) {

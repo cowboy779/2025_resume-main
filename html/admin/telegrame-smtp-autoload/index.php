@@ -6,8 +6,6 @@
     try {
       // Class이름에 .class.php를 붙힌다.
       $filename = $class . ".class.php";
-      // 디버깅 출력
-      //var_dump($filename);
 
       print('<br/>');
     
